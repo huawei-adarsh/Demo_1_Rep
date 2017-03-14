@@ -1,0 +1,58 @@
+1. yangplugin.tar
+replace all files in yangplugin.tar
+to 
+~/.m2/repository/org/onosproject
+
+2. modules.defs
+replace onos/modules.defs
+
+3. yang.tar
+replace onos/apps/yang
+
+4. yangdemo.tar
+replace onos/apps/yangdemo
+
+5. app_restconf.tar
+replace onos/apps/restconf
+
+6. protocol_restconf.tar
+replace onos/protocols/restconf
+
+7. bin_plugin_yang.jar
+replace onos/bin/plugins/yang.jar
+
+8. BUCK build and run
+tools/build/onos-buck build onos --show-output
+tools/build/onos-buck run onos-local -- clean debug
+
+9. acticate apps
+tools/test/bin/onos localhost
+
+app activate org.onosproject.yang
+app activate org.onosproject.yangdemo
+app activate org.onosproject.yms
+app activate org.onosproject.config
+app activate org.onosproject.restconf
+app activate org.onosproject.protocols.restconfserver
+
+10. restconfConfig.json
+{
+	"apps": {
+		"org.onosproject.protocols.restconfserver": {
+			"restconfCfg": {
+				"use-dyn-config": "true"
+			}
+		}
+	}
+}
+
+11. curl command for protocol restconf
+curl -X POST -H "content-type:application/json" http://localhost:8181/onos/v1/network/configuration -d @restconfConfig.json --user onos:rocks
+
+12. URI
+http://127.0.0.1:8181/onos/restconf/data/demo1:device
+
+13. POST JSON
+
+14. yang file
+onos/apps/yangdemo/yangmodel/src/main/yang
