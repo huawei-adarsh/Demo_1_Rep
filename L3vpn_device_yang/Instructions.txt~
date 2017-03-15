@@ -1,0 +1,4 @@
+Copy all *.yang files to /home/root1/onos/apps/yangdemo/yangmodel/src/main/yang
+compare respective yang and class names in Demo1Manager.java file /home/root1/onos/apps/yangdemo/demo1/src/main/java/org/onosproject/l3vpn/netl3vpn
+Compile(mcis) yangmodel inside yangdemo. 
+
