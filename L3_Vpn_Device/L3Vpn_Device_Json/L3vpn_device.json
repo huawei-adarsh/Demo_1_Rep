@@ -1,0 +1,70 @@
+URI : http://127.0.0.1:8181/onos/restconf/data/ne-l3vpn-api:devices
+
+
+{
+		"device": [{
+			"deviceid": "huawei1-ip-182.162.11.1",
+				"l3vpn": {
+					"l3vpncomm": {
+					"l3vpnInstances": {
+						"l3vpnInstance": [{
+							"vrfName": "vrf2",
+							"vrfDescription": "vrfDescription",
+								"l3vpnIfs": {
+									"l3vpnIf": [{
+										"ifName": "Ethernet 3/0/0",
+                                        "ipv4Addr": "10.1.1.1",
+                                        "subnetMask": "255.255.255.0"
+										}]
+								},
+								"vpnInstAFs": {
+									"vpnInstAF": [{
+										"afType": "ipv4uni",
+										"vrfRD": "1:1",
+											"vpnTargets": {
+												"vpnTarget": [{
+													"vrfRTValue": "1:1",
+													"vrfRTType": "export-extcommunity"
+													}]
+											}
+										}]
+								}
+							}]
+					}
+					}
+				}
+			},
+			{
+			"deviceid": "huawei2-ip-182.162.11.2",
+				"l3vpn": {
+					"l3vpncomm": {
+					"l3vpnInstances": {
+						"l3vpnInstance": [{
+							"vrfName": "vrf2",
+							"vrfDescription": "vrfDescription",
+								"l3vpnIfs": {
+									"l3vpnIf": [{
+										"ifName": "Ethernet 3/0/0",
+                                        "ipv4Addr": "10.1.1.2",
+                                        "subnetMask": "255.255.255.0"
+										}]
+								},
+								"vpnInstAFs": {
+									"vpnInstAF": [{
+										"afType": "ipv4uni",
+										"vrfRD": "1:1",
+											"vpnTargets": {
+												"vpnTarget": [{
+													"vrfRTValue": "1:1",
+													"vrfRTType": "export-extcommunity"
+													}]
+											}
+										}]
+								}
+							}]
+					}
+					}
+				}
+			}
+		]
+}
