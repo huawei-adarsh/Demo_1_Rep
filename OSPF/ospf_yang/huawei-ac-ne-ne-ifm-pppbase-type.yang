@@ -1,0 +1,73 @@
+/*
+WARNING:
+This yang model is just for fuction ONOS opensource project demo purpose only,
+And is subject to change in future, Huawei does not commit provide compatibilty
+in commercial product.
+*/
+submodule huawei-ac-ne-ne-ifm-pppbase-type {
+    belongs-to "huawei-ac-ne-ne-ifm" {
+        prefix "ifm";
+    }
+    
+    organization "Huawei Technologies Co.,Ltd.";
+    contact "Huawei Industrial Base Bantian, Longgang Shenzhen 518129                    
+              People's Republic of China                    
+              Website: http://www.huawei.com Email: support@huawei.com";
+    revision "2013-01-01";
+    typedef pppbaseMruNegoMtd {
+        type enumeration {
+            enum "IPV4" {
+                value 0;
+                description "IPv4 MRU negotiation on PPP MRU.";
+            }
+            enum "IPV6" {
+                value 1;
+                description "IPv6 MRU negotiation on PPP MRU.";
+            }
+        }
+    }
+    typedef pppbaseCrcType {
+        type enumeration {
+            enum "BitErrRatio" {
+                value 0;
+                description "Error bit rate.";
+            }
+            enum "PktErrRatio" {
+                value 1;
+                description "Error packet rate.";
+            }
+            enum "HighLow" {
+                value 2;
+                description "CRC upper and lower limit.";
+            }
+            enum "Default" {
+                value 3;
+                description "Default CRC alarm type.";
+            }
+        }
+    }
+    typedef pppbaseCrcBitType {
+        type enumeration {
+            enum "16" {
+                value 0;
+                description "16 bit.";
+            }
+            enum "32" {
+                value 1;
+                description "32 bit.";
+            }
+        }
+    }
+    typedef pppbaseNcpNegoType {
+        type enumeration {
+            enum "Enable" {
+                value 0;
+                description "Enable.";
+            }
+            enum "Disable" {
+                value 1;
+                description "Disable.";
+            }
+        }
+    }
+}

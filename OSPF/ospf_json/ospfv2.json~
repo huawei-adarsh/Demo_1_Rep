@@ -1,0 +1,47 @@
+URI : http://127.0.0.1:8181/onos/restconf/data/huawei-ac-ne-ospfv2:devices
+
+
+
+{
+   "device": [{
+     "deviceid": "huawei1-ip-182.162.11.1",
+	"ospfv2": {
+		"ospfv2comm": {
+			"ospfSites": {
+				"ospfSite": [{
+					"processId": "1",
+					"routerId": "1.1.1.1",
+					"description": "Configuration via yang",
+						"ProcessTopologys": {
+							"ProcessTopology": [{
+								"importRouteMTs": {
+									"importRouteMT": [{
+										"protocol": "rip",
+                                        "protocolProcessId": "1"
+										}]
+								}
+								"areas": {
+									"area": [{
+										"areaId": "1.1.1.1"
+											"networks": {
+												"network": [{
+													"ipAddress": "10.1.1.1",
+													"wildcardMask": "0.255.255.255"
+													}]
+											}
+											"interfaces":{
+												"interface": [{
+													"ifName": "Ethernet 3/0/0",
+													"networkType": "broadcast:"
+													}]
+											}
+										}]
+								}
+								}]
+						}
+					}]
+			}
+		}
+	}
+    }]
+}

@@ -1,0 +1,71 @@
+/*
+WARNING:
+This yang model is just for fuction ONOS opensource project demo purpose only,
+And is subject to change in future, Huawei does not commit provide compatibilty
+in commercial product.
+*/
+module huawei-ac-extension {
+  namespace "urn:huawei:yang:huawei-ac-extension";
+  prefix "ext";
+
+  organization "Huawei Technologies";
+  contact "Huawei Industrial Base
+    Bantian, Longgang
+    Shenzhen 518129
+    People's Republic of China
+    Website: http://www.huawei.com
+    Email: support@huawei.com";
+  description "ac ne extension yang syntax";
+  revision 2016-01-01 {
+    description "Initial revision";
+  }
+
+
+  //extension for DB
+  extension index {                                                                                                                  
+  argument "fieldlist";                                                                                                      
+  description "to define fields list for secondary indexes";                                                                 
+  }                                                                                                                                  
+                                                                                                                          
+                                                                                                                                   
+  extension detach {                                                                                                                 
+  argument detach;                                                                                                           
+  description "to define whether detach the list, container or the node added by augment from the parent node in DB storage";
+  }                                                                                                                            
+
+  
+  //extension for schema2yang
+  extension value-mapping {
+                
+  }  
+  
+  extension item {
+    argument value;  
+  }
+  
+  extension meaning {
+    argument value;  
+  }
+  
+
+  extension case-sensitivity {
+    argument value;  
+  }
+
+  extension bitmap-bit-range {
+    argument value;  
+  }
+  
+  //extension for data consistency
+  extension e2e-lock {
+    argument value;
+    description "to indicate one leaf need e2e lock or not";
+  }
+  
+  extension control-word {
+    argument value;
+    description " to indicate this node is a inner data, used by controller only ";
+  }
+}
+  
+

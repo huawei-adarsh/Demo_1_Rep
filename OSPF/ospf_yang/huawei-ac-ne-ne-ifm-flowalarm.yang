@@ -1,0 +1,26 @@
+/*
+WARNING:
+This yang model is just for fuction ONOS opensource project demo purpose only,
+And is subject to change in future, Huawei does not commit provide compatibilty
+in commercial product.
+*/
+submodule huawei-ac-ne-ne-ifm-flowalarm {
+    belongs-to "huawei-ac-ne-ne-ifm" {
+        prefix "ifm";
+    }
+    
+    organization "Huawei Technologies Co.,Ltd.";
+    contact "Huawei Industrial Base Bantian, Longgang Shenzhen 518129                    
+              People's Republic of China                    
+              Website: http://www.huawei.com Email: support@huawei.com";
+    description "pub_type.xsd";
+    revision "2013-01-01";
+    grouping alarm_type {
+        leaf unknownUnicastAlarm {
+            type uint32 {
+                range "1..100";
+            }
+            description "";
+        }
+    }
+}

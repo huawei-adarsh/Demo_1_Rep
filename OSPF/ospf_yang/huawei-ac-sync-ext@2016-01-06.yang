@@ -1,0 +1,47 @@
+/*
+WARNING:
+This yang model is just for fuction ONOS opensource project demo purpose only,
+And is subject to change in future, Huawei does not commit provide compatibilty
+in commercial product.
+*/
+/******************************************************
+ * Copyright (C) 2015-2016 Huawei Technologies Co., Ltd. All rights reserved.
+ * Module description & tree structure
+ ***************************************************/
+module huawei-ac-sync-ext {
+    yang-version 1;
+    namespace "urn:huawei:yang:huawei-ac-sync-ext";
+
+    prefix "sync-ext";
+
+    import huawei-ac-ne-pub-type {
+        prefix huawei-pub-type;
+    }
+
+    
+    organization "Huawei Technologies Co., Ltd.";
+    contact "Huawei Industrial Base
+    Bantian, Longgang
+    Shenzhen 518129
+    People's Republic of China
+    Website: http://www.huawei.com
+    Email: support@huawei.com";
+    description "ACV300R001C00 Yang";
+    revision 2016-01-06 {
+        description
+            "Initial version";
+    }
+
+    grouping sync-data-src-type{
+        container sync-data-src {
+            ////huawei-ext:control-word true; // control word do not download to device
+
+            leaf data-src {
+                type "huawei-pub-type:data-src-type";
+                description "audit data src field";
+            }
+        }
+    }
+}
+
+
