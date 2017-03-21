@@ -68,16 +68,28 @@ NOTE :- make sure all YRT jar update has snapshot version 1.12-SNAPSHOT other th
 
 14. protocols/restconf/server/restconfmgr/src/main/java/org/onosproject/protocol/restconf/server/restconfmanager/RestconfManager.java
     make @Component(immediate = true)
-15. After this Do Buck build onos.
-16. Once build is complete do ok clean debug.
-17. Open CLI by using onos localhost
-18. Activate required apps by using below commands.
+    
+15. extract yangdemo.tar to apps/
+    cd ~/onos/apps/yangdemo/yangmodel
+    and do 
+    mci
+    (if you found there is error in your IDE regarding to ClassName, retype it, the IDE should provide type suggestion, use that one)
+
+16. After this Do Buck build onos.
+
+17. Once build is complete do ok clean debug.
+
+18. Open CLI by using onos localhost
+
+19. Activate required apps by using below commands.
     app activate org.onosproject.yang
     app activate org.onosproject.yangdemo
     app activate org.onosproject.yms
     app activate org.onosproject.config
     app activate org.onosproject.restconf
     app activate org.onosproject.protocols.restconfserver
-19. Place the restconfConfig.json and add this path in the below curl command and give it on the terminal.
+
+20. Place the restconfConfig.json and add this path in the below curl command and give it on the terminal.
     curl -X POST -H "content-type:application/json" http://localhost:8181/onos/v1/network/configuration -d @/home/root1/Henry_app_active_command/restconfConfig.json --user onos:rocks
-20. Send the l3vpn json via postman using the URI and Body present.
+
+21. Send the l3vpn json via postman using the URI and Body present.
