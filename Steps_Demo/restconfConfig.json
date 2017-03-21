@@ -1,0 +1,9 @@
+{
+ "apps": {
+   "org.onosproject.protocols.restconfserver": {
+     "restconfCfg": {
+       "use-dyn-config": "true"
+     }
+   }
+ }
+}
