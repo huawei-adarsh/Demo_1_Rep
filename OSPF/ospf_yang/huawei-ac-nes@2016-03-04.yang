@@ -4,92 +4,57 @@ This yang model is just for fuction ONOS opensource project demo purpose only,
 And is subject to change in future, Huawei does not commit provide compatibilty
 in commercial product.
 */
-/******************************************************
- * Copyright (C) 2015-2016 Huawei Technologies Co., Ltd. All rights reserved.
- * Module description & tree structure
- ***************************************************/
-module huawei-ac-nes {
-  namespace "urn:huawei:yang:huawei-ac-nes";
-  prefix "inv";
-  
-  import ietf-yang-types { prefix yang;}  
-  
-   organization "Huawei Technologies Co., Ltd.";
-    contact "Huawei Industrial Base
-    Bantian, Longgang
-    Shenzhen 518129
-    People's Republic of China
-    Website: http://www.huawei.com
-    Email: support@huawei.com";
-						
-  revision 2016-03-04 {
-    description      
-	"Initial revision.";
-  } 
-  
-  identity ne-context {
-        description "A ne-context is a classifier for node elements which allows an RPC to provide a service on behalf of a particular element in the data tree.";
-  }
-
-  grouping ne-context-ref {
-        description
-        "A helper grouping which contains a reference to a node classified with a node-context. This allows RPCs in other yang files to refine their input to a particular node instance.";
-
-        leaf ne {
-            //ext:context-reference "ne-context";
-            type instance-identifier;
-            description "A reference to a particular node.";
-        }
-    }
-	
-  container inventory-cfg {
-        description "";
-	    container nes {
-	    description "";
-
-        list ne {
-		    //hw-ext:detach true;
-            key "ne-id";
-            description "nodes information in the topology";
-            //ext:context-instance "ne-context";
-            uses ne;        
-               
-      }  
-    }
-	
-  }
-  
-
-  container inventory-oper {
-	    description "";
-	    config false;
-    
-	    container nes {
-		    list ne {       
-			//hw-ext:detach true;
-			key "ne-id";
-            description "nodes information in the topology";
-            //ext:context-instance "ne-context";
-            uses ne; 
-			      
-		  }  
-		}
-      
-  }
-   
-  
-  typedef uuid {
-	  type yang:uuid;
-      description "uuid of NE";
+module huawei-ac-ne-ospfv2 {
+	namespace "urn:huawei:yang:huawei-ac-ne-ospfv2";
+	prefix ospfv2;
+	import huawei-ac-nes {
+		prefix inv; revision-date "2016-03-04";
 	}
-
-  grouping ne{
-    description "Grouping of ne configuration.";
-    
-    leaf ne-id {
-      type uuid;      
-    }
+	    
+	include huawei-ac-ne-ospfv2-ospfv2comm;
+	include huawei-ac-ne-ospfv2-ospfv2comm-type;
+	//TODO-ID-IS-NOT-READY type  include huawei-ac-ne-ospfv2-ospfv2comm-action;
 	
-  }
-  
+	organization "Huawei Technologies Co., Ltd";
+	contact 
+	"Huawei Industrial Base
+	 Bantian, Longgang
+	 Shenzhen 518129
+	 People's Republic of China
+	 Website: http://www.huawei.com
+	 Email: support@huawei.com
+	";
+	description "ne-ospfv2 yang";
+	revision "2016-01-01" {
+		reference "ne-ospfv2 yang";
+	}
+	augment "/inv:inventory-cfg/inv:nes/inv:ne" {
+	        //ext:augment-identifier "ospfCfgAug";
+	        container devices {
+		        list device {
+		            key deviceid;
+		            leaf deviceid {
+		                type string;
+		            }
+				container ospfv2 {
+					description "";
+					container ospfv2comm {
+						uses "ospf_ospfv2comm_ospfv2comm_cfg_type";
+						description "";
+					}
+				}
+			}
+		}
+	}
+/*	augment "/inv:inventory-oper/inv:nes/inv:ne" {
+		container ospfv2-oper {
+			description "";
+			config "false";
+			container ospfv2comm {
+				uses "ospf_ospfv2comm_ospfv2comm_oper_type";
+				description "";
+			}
+		}
+	}*/
+	
 }
