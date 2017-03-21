@@ -1,0 +1,43 @@
+/*
+WARNING:
+This yang model is just for fuction ONOS opensource project demo purpose only,
+And is subject to change in future, Huawei does not commit provide compatibilty
+in commercial product.
+*/
+/******************************************************
+ * Copyright (C) 2015-2016 Huawei Technologies Co., Ltd. All rights reserved.
+ * Module description & tree structure
+ ***************************************************/
+module huawei-ac-persist-extension {
+	yang-version 1;
+	namespace "com:huawei:enterprise:naas:persist:extension";
+	prefix persistext;
+	
+	organization "Huawei Technologies Co., Ltd.";
+    contact "Huawei Industrial Base
+    Bantian, Longgang
+    Shenzhen 518129
+    People's Republic of China
+    Website: http://www.huawei.com
+    Email: support@huawei.com";
+	
+	revision "2016-01-22" {
+		description "the extension for agile controller yang module";
+	}
+	
+
+	/*added by yangshouchuan 00239398 for example instance
+	*/
+	/*extension detach {
+		argument detach; 
+		description "if container has leaf of leaf-list members without list as a wrapper, then unique constraint needs to be defined";
+	}*/
+	
+	/*added by tangwenjie 00278750 for example instance
+	
+	extension sign {
+		argument sign; 
+		description "to define the sign of controller";
+	}*/	
+	
+}

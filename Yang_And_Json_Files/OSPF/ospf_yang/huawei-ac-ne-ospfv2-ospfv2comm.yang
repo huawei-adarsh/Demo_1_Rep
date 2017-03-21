@@ -1,0 +1,5354 @@
+/*
+WARNING:
+This yang model is just for fuction ONOS opensource project demo purpose only,
+And is subject to change in future, Huawei does not commit provide compatibilty
+in commercial product.
+*/
+submodule huawei-ac-ne-ospfv2-ospfv2comm {
+	belongs-to "huawei-ac-ne-ospfv2"{
+		prefix ospfv2;
+	}
+	import huawei-ac-ne-pub-type {
+		prefix pub-type;
+		revision-date "2016-01-05";
+	}	
+	
+	import huawei-ac-sync-ext{
+		prefix huawei-sync-ext;
+		revision-date "2016-01-06";
+	}
+
+	include huawei-ac-ne-ospfv2-ospfv2comm-type;
+	
+	organization "Huawei Technologies Co., Ltd";
+	contact 
+	"Huawei Industrial Base
+	 Bantian, Longgang
+	 Shenzhen 518129
+	 People's Republic of China
+	 Website: http://www.huawei.com
+	 Email: support@huawei.com
+	";
+	description "Support Restconf token add delete rpc";
+	revision "2016-01-01" {
+	    description "Initial revision.";
+	}
+	typedef ospfv2comm_cfg_ospfSite_vrfName_type {
+		type string {
+			length "0..32";
+		}
+		description "";
+	}
+	typedef ospf_ospfv2comm_cfg_interface_ifName_type {
+		type string {
+			length "0..48";
+		}
+		description "";
+	}
+	grouping ospf_ospfv2comm_ospfv2comm_cfg_type {
+		description "";
+		container ospfSites {
+			description "";
+			list ospfSite {
+				key "processId";
+				description "";
+
+				uses "huawei-sync-ext:sync-data-src-type";// data-source-type of the instance
+
+				leaf processId {
+					type "uint32";
+					description "";
+
+					//////huawei-ext:e2e-lock true;  // e2e-lock node
+				}
+				leaf routerId {
+					type "pub-type:ipv4Address";
+					description "";
+				}
+				leaf vrfName {
+					when "(../vrfName = null)";
+					type "string";
+					description "";
+
+					//////huawei-ext:e2e-lock true;  // e2e-lock node
+				}
+				leaf description {
+					type "string";
+					description "";
+				}
+				leaf bandwidthReference {
+					type "uint32";
+					default 100;
+					description "";
+					//////huawei-ext:e2e-lock true;  // e2e-lock node
+				}
+				leaf opaqueCapabilityFlag {
+					type "boolean";
+					description "";
+				}
+				leaf meshGroupFlag {
+					type "boolean";
+					description "";
+				}
+				leaf rfc1583CompatibleFlag {
+					type "boolean";
+					default true;
+					description "";
+				}
+				leaf lsaArrivalFlag {
+					type "boolean";
+					description "";
+					//////huawei-ext:e2e-lock true;  // e2e-lock node
+				}
+				leaf lsaArrivalInterval {
+					when "../lsaArrivalFlag = 'true'";
+					type "uint32";
+					description "";
+					//////huawei-ext:e2e-lock true;  // e2e-lock node
+				}
+				leaf lsaArrivalMaxInterval {
+					when "../lsaArrivalFlag != 'true'";
+					type "uint32";
+					default 1000;
+					description "";
+				}
+				leaf lsaArrivalStartInterval {
+					when "../lsaArrivalFlag != 'true'";
+					type "uint32";
+					default 500;
+					description "";
+				}
+				leaf lsaArrivalHoldInterval {
+					when "../lsaArrivalFlag != 'true'";
+					type "uint32";
+					default 500;
+					description "";
+				}
+				leaf lsaOriginateIntervalFlag {
+					type "boolean";
+					description "";
+					//////huawei-ext:e2e-lock true;  // e2e-lock node
+				}
+				leaf lsaOriginateInterval {
+					when "(../lsaOriginateIntervalFlag != 'true')";
+					type "uint32";
+					default 5;
+					description "";
+				}
+				leaf lsaOriginateMaxInterval {
+					when "(../lsaOriginateIntervalFlag != 'true')";
+					type "uint32";
+					default 5000;
+					description "";
+					//////huawei-ext:e2e-lock true;  // e2e-lock node
+				}
+				leaf lsaOriginateStartInterval {
+					when "(../lsaOriginateIntervalFlag != 'true')";
+					type "uint32";
+					default 500;
+					description "";
+					//////huawei-ext:e2e-lock true;  // e2e-lock node
+				}
+				leaf lsaOriginateHoldInterval {
+					when "(../lsaOriginateIntervalFlag != 'true')";
+					type "uint32";
+					default 1000;
+					description "";
+					//////huawei-ext:e2e-lock true;  // e2e-lock node
+				}
+				leaf spfScheduleIntervalType {
+					type "ospfv2commSpfIntevalFlag";
+					default intelligent-timer;
+					description "";
+					//////huawei-ext:e2e-lock true;  // e2e-lock node
+				}
+				leaf spfScheduleInterval {
+					when "(../spfScheduleIntervalType = 'timer')";
+					type "uint32";
+					description "spf-schedule-interval";
+				}
+				leaf spfScheduleIntervalMillisecond {
+					when "(../spfScheduleIntervalType = 'millisecond')";
+					type "uint32";
+					description "spf-schedule-interva2(millisecond)";
+				}
+				leaf spfScheduleMaxInterval {
+					when "(../spfScheduleIntervalType = 'intelligent-timer')";
+					type "uint32";
+					default 10000;
+					description "";
+					//////huawei-ext:e2e-lock true;  // e2e-lock node
+				}
+				leaf spfScheduleStartInterval {
+					when "(../spfScheduleIntervalType = 'intelligent-timer')";
+					type "uint32";
+					default 500;
+					description "";
+					//////huawei-ext:e2e-lock true;  // e2e-lock node
+				}
+				leaf spfScheduleHoldInterval {
+					when "(../spfScheduleIntervalType = 'intelligent-timer')";
+					type "uint32";
+					default 1000;
+					description "";
+					//////huawei-ext:e2e-lock true;  // e2e-lock node
+				}
+				leaf spfConservFlag {
+					when "(../spfScheduleIntervalType = 'intelligent-timer')";
+					type "boolean";
+					default false;
+					description "If true, Delay SPF by the maximum interval till network is stable";
+				}
+				leaf bfdAllInterfacesFlag {
+					type "boolean";
+					description "";
+				}
+				leaf bfdRxCfgFlag {
+					type "boolean";
+					description "BFD Min-rx interval flag";
+				}
+				leaf bfdMinRxInterval {
+					when "../bfdRxCfgFlag = 'true'";
+					type "uint32";
+					description "";
+				}
+				leaf bfdTxCfgFlag {
+					type "boolean";
+					description "BFD Min-tx interval flag";
+				}
+				leaf bfdMinTxInterval {
+					when "../bfdTxCfgFlag = 'true'";
+					type "uint32";
+					description "";
+				}
+				leaf bfdDetectMultiplierInterval {
+					type "uint32";
+					description "";
+				}
+				leaf frrBindingFlag {
+					type "boolean";
+					description "";
+				}
+				leaf silentAllInterfaceFlag {
+					type "boolean";
+					description "";
+				}
+				leaf retransmissionLimitFlag {
+					type "boolean";
+					description "";
+				}
+				leaf retransmissionLimit {
+					when "../retransmissionLimitFlag = 'true'";
+					type "uint32";
+					description "";
+				}
+				leaf stubRouterFlag {
+					type "ospfv2commStubRouterFlag";
+					default NoConfig;
+					description "";
+				}
+				leaf stubRouterOnStartupInterval {
+					when "../stubRouterFlag = 'StubOnBoot'";
+					type "uint32";
+					description "";
+				}
+				leaf stubRouIncStub {
+					when "(../stubRouterFlag != 'NoConfig')";
+					type "boolean";
+					description "This field is for stub-router include-stub";
+				}
+				leaf stubRouExtLsa {
+					when "(../stubRouterFlag != 'NoConfig')";
+					type "boolean";
+					description "This field is for stub-router external-lsa";
+				}
+				leaf stubRouExtCost {
+					when "(../stubRouterFlag != 'NoConfig') or (../stubRouExtLsa = 'true')";
+					type "uint32";
+					description "This field is for stub-router external-lsa overridding metric";
+				}
+				leaf stubRouSumLsa {
+					when "(../stubRouterFlag != 'NoConfig')";
+					type "boolean";
+					description "This field is for stub-router summary-lsa";
+				}
+				leaf stubRouSumCost {
+					when "(../stubRouterFlag != 'NoConfig') or (../stubRouSumLsa = 'true')";
+					type "uint32";
+					description "This field is for stub-router summary-lsa overridding metric";
+				}
+				leaf routeTagDisableFlag {
+					when "(../vrfName != '_public_' and ../vrfName != null) or (../routeTagFlag != 'true')";
+					type "boolean";
+					description "";
+				}
+				leaf routeTagFlag {
+					when "(../vrfName != '_public_' and ../vrfName != 'null') or not(../vrfName = '_public_' and ../vrfName = 'null') or (../routeTagDisableFlag != 'true') or (../routeTagDisableFlag != 'true' and ../vrfName != '_public_' and ../vrfName != 'null')";
+					type "boolean";
+					description "";
+				}
+				leaf routeTag {
+					when "not(../vrfName = '_public_' and ../vrfName = null) or (../routeTagFlag = 'true') or (../routeTagFlag = 'true' and ../vrfName = '_public_' and ../vrfName = null)";
+					type "uint32";
+					description "";
+				}
+				leaf vpnInstanceCapabilitySimpleFlag {
+					when "../vrfName != '_public_' and ../vrfName != null";
+					type "boolean";
+					description "";
+				}
+				leaf safeSyncFlag {
+					type "boolean";
+					description "safe-sync";
+				}
+				leaf trafficAdj {
+					when "(../multicastRpfRouteFlag != 'true')";
+					type "boolean";
+					description "";
+				}
+				leaf trafficAdv {
+					when "(../trafficAdj = 'true')";
+					type "boolean";
+					description "";
+				}
+				leaf multicastRpfRouteFlag {
+					when "(../vrfName = '_public_' and ../vrfName = null) or (../trafficAdj = 'true' and ../vrfName = '_public_')";
+					type "boolean";
+					description "";
+				}
+				leaf advMplsLsrId {
+					when "../vrfName = '_public_' or ../vrfName = null";
+					type "boolean";
+					description "";
+				}
+				leaf advMplsLsrIdCost {
+					when "(../advMplsLsrId = 'true')";
+					type "uint32";
+					description "Cost of advertised MPLS LSR-ID";
+				}
+				leaf ecaRouteFlag {
+					when "../vrfName != '_public_' and ../vrfName != null";
+					type "boolean";
+					description "ECA Route Flag";
+				}
+				leaf domainIdNullFlag {
+					when "../vrfName != '_public_' and ../vrfName != null";
+					type "boolean";
+					description "";
+				}
+				leaf suppressReachability {
+					type "boolean";
+					description "suppress its own prefixes and ignore the suppressed prefixes";
+				}
+				leaf mplsLdpAutoConfig {
+					type "ospfv2ProcAutoCfgState";
+					default None;
+					description "Auto configure MPLS LDP on all interfaces under this process";
+				}
+				leaf shutDownFlg {
+					type "boolean";
+					default false;
+					description "Shutdown OSPF Service";
+				}
+				container ProcessTopologys {
+					description "";
+					list ProcessTopology {
+						key "topoName";
+						description "";
+						leaf topoName {
+							type "string";
+							description "";
+
+							//////huawei-ext:e2e-lock true;  // e2e-lock node
+						}
+						leaf maxLoadBalancing {
+							type "uint32";
+							description "";
+						}
+						leaf defaultCost {
+							when "(../defaultCostInheritMetricFlag != 'true')";
+							type "uint32";
+							default 1;
+							description "";
+						}
+						leaf defaultCostInheritMetricFlag {
+							type "boolean";
+							description "";
+						}
+						leaf defaultTag {
+							type "uint32";
+							default 1;
+							description "";
+						}
+						leaf defaultType {
+							type "ospfv2commExternalRouteType";
+							default Type2;
+							description "";
+						}
+						leaf avoidMicroloopFrrDisable {
+							type "boolean";
+							description "";
+						}
+						leaf avoidMicroloopFrrDelay {
+							type "uint32";
+							default 100;
+							description "";
+						}
+						container defaultRouteMTs {
+							description "";							
+							container defaultRouteMT {
+								description "Default route advertise";								
+								leaf defRoutEnableFlag {
+									type "boolean";
+									description "Flag to configure or unconfigure default route advertise";
+								}
+								leaf configCost {
+									when "(../defRoutEnableFlag = 'true') or (../flag = 'DefRtAdv') or (../flag = 'Always')";
+									type "boolean";
+									description "configCost flag";
+								}
+								leaf cost {
+									when "(../defRoutEnableFlag = 'true') or (../configCost = 'true')";
+									type "uint32";
+									description "cost to advertise";
+								}
+								leaf configType {
+									when "(../flag != 'Summary') or (../defRoutEnableFlag = 'true') or (../flag = 'DefRtAdv') or (../flag = 'Always')";
+									type "boolean";
+									description "configType flag";
+								}
+								leaf type {
+									when "(../configType = 'true') or (../flag != 'Summary') or (../defRoutEnableFlag = 'true')";
+									type "ospfv2commExternalRouteType";
+									default Type2;
+									description "type to advertise";
+								}
+								leaf flag {
+									when "(../defRoutEnableFlag = 'true')";
+									type "ospfv2commDefRtConfigFlag";
+									default DefRtAdv;
+									description "config always.PermCalcOth,Summary";
+								}
+								leaf permitCalculateOther {
+									when "(../flag != 'Summary') or (../defRoutEnableFlag = 'true') or (../flag = 'DefRtAdv') or (../flag != 'Always')";
+									type "boolean";
+									description "PermCalcOthFlg flag";
+								}
+								leaf routePolicyName {
+									when "(../flag != 'Summary') or (../defRoutEnableFlag = 'true') or (../flag = 'DefRtAdv') or (../flag = 'Always') or (../policyType = 'route_policy') or (../policyType != 'None')";
+									type "string";
+									description "";
+								}
+								leaf delayTimer {
+									when "(../flag != 'Summary') or (../defRoutEnableFlag = 'true') or (../flag = 'DefRtAdv') or (../flag = 'Always')";
+									type "uint32";
+									description "Distribute delay timer";
+								}
+								leaf policyType {
+									when "(../defRoutEnableFlag = 'true')";
+									type "ospfv2commRoutePolicy";
+									description "";
+								}
+								leaf routeFilterName {
+									when "(../policyType != 'route_policy') or (../policyType = 'route_filter') or (../policyType != 'None')";
+									type "string";
+									description "";
+								}
+							}
+						}
+
+						container importRouteMTs {
+							description "";
+							list importRouteMT {
+								key "protocol protocolProcessId";
+								description "";
+								leaf protocol {
+									type "ospfv2commImporttRtProtocol";
+									description "";
+
+									//////huawei-ext:e2e-lock true;  // e2e-lock node
+								}
+								leaf protocolProcessId {
+									when "(../protocol != 'bgp') or (../protocol != 'static') or (../protocol != 'direct') or (../protocol = 'direct' and ../protocol = 'static' and ../protocol = 'bgp') or (../protocol != 'direct' and ../protocol != 'static' and ../protocol != 'bgp')";
+									type "uint32";
+									description "";
+
+									//////huawei-ext:e2e-lock true;  // e2e-lock node
+								}
+								leaf costConfigFlag {
+									type "boolean";
+									default false;
+									description "Enable Cost configuration";
+								}
+								leaf cost {
+									when "(../costConfigFlag = 'true')";
+									type "uint32";
+									default 1;
+									description "";
+								}
+								leaf tagConfigFlag {
+									type "boolean";
+									default false;
+									description "Enable tag configuration";
+									//////huawei-ext:e2e-lock true;  // e2e-lock node
+								}
+								leaf tag {
+									when "(../tagConfigFlag = 'true')";
+									type "uint32";
+									default 1;
+									description "";
+									//////huawei-ext:e2e-lock true;  // e2e-lock node
+								}
+								leaf typeConfigFlag {
+									type "boolean";
+									default false;
+									description "Enable type configuration";
+								}
+								leaf type {
+									when "(../typeConfigFlag = 'true')";
+									type "ospfv2commExternalRouteType";
+									default Type2;
+									description "";
+								}
+								leaf routePolicyName {
+									when "(../policyType = 'route_policy') or (../policyType != 'route_filter') or (../policyType != 'None')";
+									type "string";
+									description "";
+								}
+								leaf policyType {
+									type "ospfv2commRoutePolicy";
+									description "";
+								}
+								leaf routeFilterName {
+									when "(../policyType != 'route_policy') or (../policyType = 'route_filter') or (../policyType != 'None')";
+									type "string";
+									description "";
+								}
+								leaf permitIbgpFlag {
+									when "(../protocol = 'bgp') or (../protocol != 'static') or (../protocol != 'direct') or (../protocol = 'direct' and ../protocol = 'static' and ../protocol = 'bgp')";
+									type "boolean";
+									description "permitIbgpFlag";
+								}
+							}
+						}
+
+					}
+				}
+
+				container areas {
+					description "";
+					list area {
+						key "areaId";
+						description "";
+						leaf areaId {
+							type "pub-type:ipv4Address";
+							description "";
+
+							//////huawei-ext:e2e-lock true;  // e2e-lock node
+						}
+						leaf areaType {
+							type "ospfv2commAreaType";
+							default Normal;
+							description "";
+
+							//////huawei-ext:e2e-lock true;  // e2e-lock node
+						}
+						leaf descriptionArea {
+							type "string";
+							description "Area Description";
+						}
+						leaf authenticationMode {
+							type "ospfv2commAreaAuthenMode";
+							default none;
+							description "";
+						}
+						leaf authTextSimple {
+							when "(../authenticationMode = 'simple') or (../authenticationMode != 'none') or (../authenticationMode != 'md5') or (../authenticationMode != 'hmac-md5') or (../authenticationMode != 'keychain') or (../authenticationMode != 'hmac-sha256')";
+							type "pub-type:passwordOSPF";
+							description "";
+						}
+						leaf keyId {
+							when "(../authenticationMode != 'simple') or (../authenticationMode != 'none') or (../authenticationMode = 'md5') or (../authenticationMode = 'hmac-md5') or (../authenticationMode != 'keychain') or (../authenticationMode = 'hmac-sha256')";
+							type "uint32";
+							description "";
+						}
+						leaf authTextMd5 {
+							when "(../authenticationMode != 'simple') or (../authenticationMode != 'none') or (../authenticationMode = 'md5') or (../authenticationMode = 'hmac-md5') or (../authenticationMode != 'keychain') or (../authenticationMode = 'hmac-sha256')";
+							type "pub-type:passwordExtend";
+							description "";
+						}
+						leaf stubNoSummary {
+							when "(../areaType != 'Normal') or (../areaType = 'Nssa') or (../areaType = 'Stub')";
+							type "boolean";
+							description "";
+							//////huawei-ext:e2e-lock true;  // e2e-lock node
+						}
+						leaf nssaTranslatorAlways {
+							when "(../areaType = 'Nssa')";
+							type "boolean";
+							description "NSSA translator role always";
+						}
+						leaf nssaDefaultRouteAdvertise {
+							when "(../areaType = 'Nssa')";
+							type "boolean";
+							description "Originate Type 7 default into NSSA area";
+						}
+						leaf nssaBackbonePeerIr {
+							when "../nssaDefaultRouteAdvertise = 'true'";
+							type "boolean";
+							description "Ignore backbone peer into NSSA area";
+						}
+						leaf nssaNoImportRoute {
+							when "(../areaType = 'Nssa')";
+							type "boolean";
+							description "No redistribution into this NSSA area";
+						}
+						leaf nssaSetNbit {
+							when "(../areaType = 'Nssa')";
+							type "boolean";
+							description "Set n bit in DD packet in NSSA area";
+						}
+						leaf nssaSuppressForwardingAddress {
+							when "(../areaType = 'Nssa')";
+							type "boolean";
+							description "Suppress forwarding address for Translated Type-5 LSAs";
+						}
+						leaf nssaZeroAddressForwarding {
+							when "(../areaType = 'Nssa')";
+							type "boolean";
+							description "Allow zero forwarding address for Type-7 LSAs";
+						}
+						leaf nssaTranslatorInterval {
+							when "(../areaType = 'Nssa')";
+							type "int32";
+							default 40;
+							description "Translator interval";
+						}
+						leaf defaultCost {
+							when "(../areaType != 'Normal') or (../areaType = 'Nssa') or (../areaType = 'Stub')";
+							type "int32";
+							default 1;
+							description "";
+						}
+						leaf ldpSyncFlag {
+							type "boolean";
+							default false;
+							description "Enable LDP-OSPF synchronization";
+						}
+						leaf ldpMaxCostConfigFlag {
+							when "(../ldpInfiniteFlag != 'true') or (../ldpMaxCostConfigFlag != 'true')";
+							type "boolean";
+							default false;
+							description "Enable HoldMaxCost timer";
+						}
+						leaf ldpMaxCostInterval {
+							when "(../ldpInfiniteFlag != 'true') or (../ldpMaxCostConfigFlag = 'true')";
+							type "uint32";
+							default 10;
+							description "HoldMaxCost timer";
+						}
+						leaf ldpInfiniteFlag {
+							when "(../ldpMaxCostConfigFlag != 'true')";
+							type "boolean";
+							default true;
+							description "Always advertise the maximum cost";
+						}
+						container networks {
+							description "";
+							list network {
+								key "ipAddress wildcardMask";
+								description "";
+								leaf ipAddress {
+									type "pub-type:ipv4Address";
+									description "";
+
+									//////huawei-ext:e2e-lock true;  // e2e-lock node
+								}
+								leaf wildcardMask {
+									type "pub-type:ipv4Address";
+									description "";
+
+									//////huawei-ext:e2e-lock true;  // e2e-lock node
+								}
+								leaf description {
+									type "string";
+									description "";
+								}
+							}
+						}
+						container interfaces {
+							description "";
+							list interface {
+								key "ifName";
+								description "";
+								leaf ifName {
+									//type leafref {
+                                    //	path "/inv:inventory-oper/inv:nes/inv:ne/ifm:ifm-oper/ifm:interfaces/ifm:interface/ifm:ifName";
+                                    //}
+									type "string";
+									description "";
+									////huawei-ext:e2e-lock true;  // e2e-lock node
+								}
+								leaf networkType {
+									when "(../ifName != 'Tunnel')";
+									type "ospfv2commNetworkType";
+									description "";
+								}
+								leaf peerIpIgnore {
+									when "(../networkType = 'p2p')";
+									type "ospfPeerIpIgnoreType";
+									description "Peer Ip Ignore Flag";
+								}
+								leaf helloInterval {
+									when "(../ifName != 'LoopBack')";
+									type "int32";
+									description "";
+								}
+								leaf deadInterval {
+									type "int32";
+									description "";
+								}
+								leaf waitInterval {
+									type "uint32";
+									description "";
+								}
+								leaf pollInterval {
+									type "int32";
+									description "";
+								}
+								leaf transDelayInterval {
+									when "(../ifName != 'LoopBack')";
+									type "int32";
+									description "";
+								}
+								leaf retransmitInterval {
+									when "(../ifName != 'LoopBack')";
+									type "int32";
+									description "";
+								}
+								leaf mtuEnable {
+									when "(../ifName != 'LoopBack')";
+									type "boolean";
+									description "";
+								}
+								leaf silentEnable {
+									when "(../ifName != 'LoopBack')";
+									type "boolean";
+									config "false";
+									description "";
+								}
+								leaf drPriority {
+									when "(../ifName != 'LoopBack')";
+									type "int32";
+									description "";
+								}
+								leaf configCost {
+									when "(../ifName != 'LoopBack')";
+									type "uint32";
+									description "";
+								}
+								leaf smartDiscover {
+									when "(../ifName != 'LoopBack')";
+									type "boolean";
+									description "";
+								}
+								leaf p2mpMaskIgnore {
+									when "(../ifName != 'LoopBack')";
+									type "boolean";
+									description "";
+								}
+								leaf frrBlockFlag {
+									when "(../ifName != 'LoopBack')";
+									type "boolean";
+									description "";
+								}
+								leaf bfdblock {
+									when "(../ifName != 'LoopBack') or (../bfdEnable != 'true')";
+									type "boolean";
+									description "";
+								}
+								leaf bfdEnable {
+									when "(../ifName != 'LoopBack') or (../bfdblock != 'true')";
+									type "boolean";
+									description "";
+								}
+								leaf perLinkFlag {
+									when "(../bfdEnable = 'true' and ../ifName = 'Vlanif')";
+									type "boolean";
+									description "Per Link for Vlanif only";
+								}
+								leaf oneArmEchoFlag {
+									when "(../bfdEnable = 'true' and ../ifName = 'Vlanif')";
+									type "boolean";
+									description "Per Link for Vlanif only";
+								}
+								leaf bfdDetectMultiplierValue {
+									when "(../ifName != 'LoopBack')";
+									type "uint32";
+									description "";
+								}
+								leaf bfdMinTxInterval {
+									when "(../ifName != 'LoopBack')";
+									type "uint32";
+									description "";
+								}
+								leaf bfdMinRxInterval {
+									when "(../ifName != 'LoopBack')";
+									type "uint32";
+									description "";
+								}
+								leaf frrBindingFlag {
+									when "(../ifName != 'LoopBack')";
+									type "boolean";
+									description "";
+								}
+								leaf authenticationMode {
+									type "ospfv2commIntfAuthenMode";
+									default none;
+									description "";
+									////huawei-ext:e2e-lock true;  // e2e-lock node
+								}
+								leaf authTextSimple {
+									when "(../authenticationMode != 'hmac-md5') or (../authenticationMode = 'simple') or (../authenticationMode != 'none') or (../authenticationMode != 'keychain') or (../authenticationMode != 'null') or (../authenticationMode != 'md5') or (../authenticationMode != 'hmac-sha256')";
+									type "pub-type:passwordOSPF";
+									description "";
+								}
+								leaf keyId {
+									when "(../authenticationMode = 'hmac-md5') or (../authenticationMode != 'simple') or (../authenticationMode != 'none') or (../authenticationMode != 'keychain') or (../authenticationMode != 'null') or (../authenticationMode = 'md5') or (../authenticationMode = 'hmac-sha256')";
+									type "uint32";
+									description "";
+								}
+								leaf authTextMd5 {
+									when "(../authenticationMode = 'hmac-md5') or (../authenticationMode != 'simple') or (../authenticationMode != 'none') or (../authenticationMode != 'keychain') or (../authenticationMode != 'null') or (../authenticationMode = 'md5') or (../authenticationMode = 'hmac-sha256')";
+									type "pub-type:passwordExtend";
+									description "";
+								}
+								leaf ldpSyncBlock {
+									when "(../ifName != 'LoopBack') or (../ldpSynchronicEnable != 'true')";
+									type "boolean";
+									description "";
+								}
+								leaf ldpSynchronicEnable {
+									when "(../ifName != 'LoopBack') or (../ldpSyncBlock != 'true')";
+									type "boolean";
+									description "";
+								}
+								leaf maxCostFlag {
+									when "(../maxCostFlag != 'true') or (../infiniteFlag != 'true') or (../ifName != 'LoopBack')";
+									type "boolean";
+									description "";
+								}
+								leaf maxCostInterval {
+									when "(../maxCostFlag = 'true') or (../ifName != 'LoopBack')";
+									type "uint16";
+									default 10;
+									description "";
+								}
+								leaf infiniteFlag {
+									when "(../maxCostFlag != 'true') or (../ifName != 'LoopBack')";
+									type "boolean";
+									description "";
+								}
+								leaf ldpHoldDownInterval {
+									type "uint16";
+									default 10;
+									description "HoldDown timer";
+								}
+								leaf suppressReachability {
+									when "(../ifName != 'LoopBack')";
+									type "ospfv2SupprReach";
+									default "Not Configured";
+									description "Suppress Reahability configuration.";
+								}
+								leaf linkCost {
+									when "(../ifName != 'LoopBack')";
+									type "uint32";
+									description "Low Link quality Cost.";
+								}
+								leaf mplsLdpAutoConfig {
+									when "(../ifName != 'LoopBack')";
+									type "ospfv2IfAutoCfgState";
+									default None;
+									description "Auto configure MPLS LDP on this interfaces";
+								}
+								leaf allFlag {
+									when "(../ifName != 'LoopBack') or (../sumFlag = 'false' and ../aseFlag = 'false' and ../nssaFlag = 'false')";
+									type "boolean";
+									description "Block all LSA types";
+								}
+								leaf sumFlag {
+									when "(../ifName != 'LoopBack') or (../allFlag != 'true')";
+									type "boolean";
+									description "Block summary LSAs";
+								}
+								leaf sumFilterType {
+									when "(../ifName != 'LoopBack') or (../sumFlag = 'true')";
+									type "ospfv2commFilterLsaOutPolicy";
+									default none;
+									description "";
+								}
+								leaf sumFilterName {
+									when "(../ifName != 'LoopBack') or (../sumFilterType != 'none')";
+									type "string";
+									description "Configure filter name or num for summary LSAs";
+								}
+								leaf aseFlag {
+									when "(../ifName != 'LoopBack') or (../allFlag != 'true')";
+									type "boolean";
+									description "Block AS external LSAs";
+								}
+								leaf aseFilterType {
+									when "(../ifName != 'LoopBack') or (../aseFlag = 'true')";
+									type "ospfv2commFilterLsaOutPolicy";
+									default none;
+									description "";
+								}
+								leaf aseFilterName {
+									when "(../ifName != 'LoopBack') or (../aseFilterType != 'none')";
+									type "string";
+									description "Configure filter name or num for summary LSAs";
+								}
+								leaf nssaFlag {
+									when "(../ifName != 'LoopBack') or (../allFlag != 'true')";
+									type "boolean";
+									description "Block NSSA LSAs";
+								}
+								leaf nssaFilterType {
+									when "(../ifName != 'LoopBack') or (../nssaFlag = 'true')";
+									type "ospfv2commFilterLsaOutPolicy";
+									default none;
+									description "";
+								}
+								leaf nssaFilterName {
+									when "(../ifName != 'LoopBack') or (../nssaFilterType != 'none')";
+									type "string";
+									description "Configure filter name or number for NSSA";
+								}
+								leaf dcnOpqBlkEnable {
+									type "boolean";
+									description "Block Type-10 DCN Opaque LSAs";
+								}
+								leaf rLfaDisable {
+									when "(../ifName != 'LoopBack')";
+									type "boolean";
+									description "";
+								}
+								leaf suppressReachabilityBlock {
+									type "ospfv2SupprReach";
+									default false;
+									config "false";
+									description "Suppress Reachability disabled";
+								}
+								leaf designatedRouter {
+									type "pub-type:ipv4Address";
+									config "false";
+									description "";
+								}
+								leaf backupDesignatedRouter {
+									type "pub-type:ipv4Address";
+									config "false";
+									description "";
+								}
+								leaf interfaceState {
+									type "ospfv2commIntfState";
+									config "false";
+									description "";
+								}
+								leaf mtu {
+									type "uint32";
+									config "false";
+									description "";
+								}
+								leaf interfaceIpAddress {
+									type "pub-type:ipv4Address";
+									config "false";
+									description "";
+								}
+								leaf interfaceCost {
+									type "int32";
+									config "false";
+									description "";
+								}
+								leaf grState {
+									type "ospfv2commGRState";
+									config "false";
+									description "";
+								}
+								leaf prevIntfState {
+									type "ospfv2commIntfState";
+									config "false";
+									description "previous interface state";
+								}
+								leaf opaqueId {
+									type "uint32";
+									config "false";
+									description "opaqueId";
+								}
+								leaf mplsTeLink {
+									type "boolean";
+									default false;
+									config "false";
+									description "mplsTeLink";
+								}
+								
+								container nbrStatistics {
+									description "";
+									list nbrStatistic {
+										config "false";
+										description "";
+										leaf interfaceIpAddr {
+											type "pub-type:ipv4Address";
+											config "false";
+											description "";
+										}
+										leaf nbrRouterId {
+											type "pub-type:ipv4Address";
+											config "false";
+											description "";
+										}
+										leaf nbrIpAddr {
+											type "pub-type:ipv4Address";
+											config "false";
+											description "";
+										}
+										leaf grState {
+											type "ospfv2commNbrDispGRState";
+											config "false";
+											description "GR state";
+										}
+										leaf nbrState {
+											type "ospfv2commNbrState";
+											config "false";
+											description "";
+										}
+										leaf nbrMode {
+											type "ospfv2commNbrMode";
+											config "false";
+											description "";
+										}
+										leaf nbrPriority {
+											type "int32";
+											config "false";
+											description "";
+										}
+										leaf nbrDR {
+											type "pub-type:ipv4Address";
+											config "false";
+											description "";
+										}
+										leaf nbrBDR {
+											type "pub-type:ipv4Address";
+											config "false";
+											description "";
+										}
+										leaf nbrInterfaceMTU {
+											type "uint32";
+											config "false";
+											description "";
+										}
+										leaf deadDueTimer {
+											type "string";
+											config "false";
+											description "dead Due Timer";
+										}
+										leaf nbrRetranIntv {
+											type "uint32";
+											config "false";
+											description "nbrRetranIntv";
+										}
+										leaf nbrUpTime {
+											type "string";
+											config "false";
+											description "";
+										}
+										leaf nbrAuthenticationSequence {
+											type "uint32";
+											config "false";
+											description "";
+										}
+									}
+								}
+								container requestQueues {
+									description "";
+									list requestQueue {
+										config "false";
+										description "";
+										leaf routerId {
+											type "pub-type:ipv4Address";
+											config "false";
+											description "";
+										}
+										leaf nbrRouterId {
+											type "pub-type:ipv4Address";
+											config "false";
+											description "";
+										}
+										leaf nbrIpAddr {
+											type "pub-type:ipv4Address";
+											config "false";
+											description "";
+										}
+										leaf interfaceIpAddr {
+											type "pub-type:ipv4Address";
+											config "false";
+											description "";
+										}
+										leaf areaId {
+											type "pub-type:ipv4Address";
+											config "false";
+											description "";
+										}
+										leaf lsaType {
+											type "ospfv2commLsaType";
+											config "false";
+											description "";
+										}
+										leaf linkStateId {
+											type "pub-type:ipv4Address";
+											config "false";
+											description "";
+										}
+										leaf advertiseRouterId {
+											type "pub-type:ipv4Address";
+											config "false";
+											description "";
+										}
+										leaf lsaSequence {
+											type "string";
+											config "false";
+											description "";
+										}
+										leaf lsaAge {
+											type "uint32";
+											config "false";
+											description "";
+										}
+									}
+								}
+								container retransQueues {
+									description "";
+									list retransQueue {
+										config "false";
+										description "";
+										leaf routerId {
+											type "pub-type:ipv4Address";
+											config "false";
+											description "";
+										}
+										leaf nbrRouterId {
+											type "pub-type:ipv4Address";
+											config "false";
+											description "";
+										}
+										leaf nbrIpAddr {
+											type "pub-type:ipv4Address";
+											config "false";
+											description "";
+										}
+										leaf interfaceIpAddr {
+											type "pub-type:ipv4Address";
+											config "false";
+											description "";
+										}
+										leaf lsaType {
+											type "ospfv2commLsaType";
+											config "false";
+											description "";
+										}
+										leaf linkStateId {
+											type "pub-type:ipv4Address";
+											config "false";
+											description "";
+										}
+										leaf advertiseRouterId {
+											type "pub-type:ipv4Address";
+											config "false";
+											description "";
+										}
+										leaf lsaSequence {
+											type "string";
+											config "false";
+											description "";
+										}
+										leaf lsaAge {
+											type "uint32";
+											config "false";
+											description "";
+										}
+									}
+								}
+								container bfdStatistics {
+									description "";
+									list bfdStatistic {
+										config "false";
+										description "";
+										leaf routerId {
+											type "pub-type:ipv4Address";
+											config "false";
+											description "";
+										}
+										leaf neighbourRouterId {
+											type "pub-type:ipv4Address";
+											config "false";
+											description "";
+										}
+										leaf bfdState {
+											type "ospfv2commBFDState";
+											config "false";
+											description "";
+										}
+										leaf localIpAddr {
+											type "pub-type:ipv4Address";
+											config "false";
+											description "";
+										}
+										leaf remoteIpAddr {
+											type "pub-type:ipv4Address";
+											config "false";
+											description "";
+										}
+										leaf rxInterval {
+											type "uint32";
+											config "false";
+											description "Rx Interval";
+										}
+										leaf txInterval {
+											type "uint32";
+											config "false";
+											description "Tx Interval";
+										}
+										leaf multiplier {
+											type "uint32";
+											config "false";
+											description "Detect Multiplier";
+										}
+										leaf bfdLocalDis {
+											type "uint32";
+											config "false";
+											description "Local Discriminator";
+										}
+										leaf diagnosticInfo {
+											type "ospfBfdDiagInfoType";
+											config "false";
+											description "Diagnostic Information";
+										}
+									}
+								}
+								container ospfLdpSyncStatistics {
+									description "";
+									list ospfLdpSyncStatistic {
+										config "false";
+										description "";
+										leaf maxCostInterval {
+											type "uint16";
+											config "false";
+											description "";
+										}
+										leaf maxCostInfinite {
+											type "boolean";
+											config "false";
+											description "";
+										}
+										leaf ldpState {
+											type "ospfv2commLdpState";
+											config "false";
+											description "";
+										}
+										leaf ospfSyncState {
+											type "ospfv2commOSPFSyncState";
+											config "false";
+											description "";
+										}
+									}
+								}
+								container errorDatas {
+									description "";
+									list errorData {
+										config "false";
+										description "";
+										leaf ifName {
+											type "pub-type:ifName";
+											config "false";
+											description "Outgoing interface";
+										}
+										leaf rtrId {
+											type "pub-type:ipv4Address";
+											config "false";
+											description "Router Id";
+										}
+										leaf sameIpPktCnt {
+											type "uint32";
+											config "false";
+											description "IPv6: received my own packet";
+										}
+										leaf badPktCnt {
+											type "uint32";
+											config "false";
+											description "Bad packet";
+										}
+										leaf badVerCnt {
+											type "uint32";
+											config "false";
+											description "Bad version";
+										}
+										leaf badChkSumPktCnt {
+											type "uint32";
+											config "false";
+											description "Bad Checksum pkt count";
+										}
+										leaf badAreaPktCnt {
+											type "uint32";
+											config "false";
+											description "Bad area ID";
+										}
+										leaf pktRcvUnNumber {
+											type "uint32";
+											config "false";
+											description "Bad Receive unnumberd";
+										}
+										leaf badVirtLinkCnt {
+											type "uint32";
+											config "false";
+											description "Bad virtual link";
+										}
+										leaf authTypeFailCnt {
+											type "uint32";
+											config "false";
+											description "Bad authentication type";
+										}
+										leaf authKeyFailCnt {
+											type "uint32";
+											config "false";
+											description "Bad authentication key";
+										}
+										leaf shortPktCnt {
+											type "uint32";
+											config "false";
+											description "Packet too small";
+										}
+										leaf longPktCnt {
+											type "uint32";
+											config "false";
+											description "Packet larger than ip num";
+										}
+										leaf txErrCnt {
+											type "uint32";
+											config "false";
+											description "Transmit error";
+										}
+										leaf ifDownCnt {
+											type "uint32";
+											config "false";
+											description "Interface down";
+										}
+										leaf noNbr {
+											type "uint32";
+											config "false";
+											description "Unknown neighbor";
+										}
+										leaf misNetmaskCnt {
+											type "uint32";
+											config "false";
+											description "mis net mask count";
+										}
+										leaf misHelloIntlCnt {
+											type "uint32";
+											config "false";
+											description "Hello timer mismatch";
+										}
+										leaf misDeadIntlCnt {
+											type "uint32";
+											config "false";
+											description "Dead timer mismatch";
+										}
+										leaf misExtRouCapCnt {
+											type "uint32";
+											config "false";
+											description "Extern option mismatch";
+										}
+										leaf routerIdConfusion {
+											type "uint32";
+											config "false";
+											description "Router Id Confusion";
+										}
+										leaf vlinkNbrMisCnt {
+											type "uint32";
+											config "false";
+											description "Virtual neighbor unknown";
+										}
+										leaf nbmaNbrErrCnt {
+											type "uint32";
+											config "false";
+											description "NBMA neighbor unknown";
+										}
+										leaf invalSrcHeloCnt {
+											type "uint32";
+											config "false";
+											description "Virtual neighbor unknown";
+										}
+										leaf ddNbrLowCnt {
+											type "uint32";
+											config "false";
+											description "Neighbour state low";
+										}
+										leaf ddRtrIdCnt {
+											type "uint32";
+											config "false";
+											description "Router id confusion";
+										}
+										leaf ddOptMsMatchCnt {
+											type "uint32";
+											config "false";
+											description "Extern option mismatch";
+										}
+										leaf ddUnknwnLsaCnt {
+											type "uint32";
+											config "false";
+											description "Unknown LSA type";
+										}
+										leaf ddMtuMsMatchCnt {
+											type "uint32";
+											config "false";
+											description "MTU option mismatch";
+										}
+										leaf ackNbrLowCnt {
+											type "uint32";
+											config "false";
+											description "Neighbour state low";
+										}
+										leaf ackBadCnt {
+											type "uint32";
+											config "false";
+											description "Bad ack";
+										}
+										leaf ackDuplicateCnt {
+											type "uint32";
+											config "false";
+											description "Duplicate ack";
+										}
+										leaf ackUnknwnLsaCnt {
+											type "uint32";
+											config "false";
+											description "Unknown LSA type";
+										}
+										leaf reqNbrLowCnt {
+											type "uint32";
+											config "false";
+											description "Neighbour state low";
+										}
+										leaf reqEmptyCnt {
+											type "uint32";
+											config "false";
+											description "Empty request";
+										}
+										leaf reqBadCnt {
+											type "uint32";
+											config "false";
+											description "Bad request";
+										}
+										leaf updNbrLowCnt {
+											type "uint32";
+											config "false";
+											description "Neighbor state low";
+										}
+										leaf updSelfNewrCnt {
+											type "uint32";
+											config "false";
+											description "Newer self-generate LSA";
+										}
+										leaf updMinLSArrCnt {
+											type "uint32";
+											config "false";
+											description "Received LSA within LSA Arrival interval";
+										}
+										leaf updLsChkSumCnt {
+											type "uint32";
+											config "false";
+											description "LSA checksum bad";
+										}
+										leaf updLesRecentCnt {
+											type "uint32";
+											config "false";
+											description "Received less recent LSA";
+										}
+										leaf updUnknwLsaCnt {
+											type "uint32";
+											config "false";
+											description "Unknown LSA type";
+										}
+										leaf opq9floodCnt {
+											type "uint32";
+											config "false";
+											description "Opec 9 flood count";
+										}
+										leaf opq10floodCnt {
+											type "uint32";
+											config "false";
+											description "Opec 10 flood count";
+										}
+										leaf opq11floodCnt {
+											type "uint32";
+											config "false";
+											description "Opec 11 flood count";
+										}
+										leaf rxmtDDErrCnt {
+											type "uint32";
+											config "false";
+											description "Number for DD Packet";
+										}
+										leaf rxmtReqErrCnt {
+											type "uint32";
+											config "false";
+											description "Number for Request Packet";
+										}
+										leaf rxmtUpdErrCnt {
+											type "uint32";
+											config "false";
+											description "Number for Update Packet";
+										}
+										leaf grInvalidLsaCnt {
+											type "uint32";
+											config "false";
+											description "Number of invalid LSAs";
+										}
+										leaf grInvalidPolCnt {
+											type "uint32";
+											config "false";
+											description "Number of policy failed LSAs";
+										}
+										leaf grInvalidPrdCnt {
+											type "uint32";
+											config "false";
+											description "Number of wrong period LSAs";
+										}
+										leaf tunnelCostCnt {
+											type "uint32";
+											config "false";
+											description "Tunnel cost mistake";
+										}
+										leaf peerNetTypeCnt {
+											type "uint32";
+											config "false";
+											description "Neighbouring interface";
+										}
+									}
+								}
+							}
+						}
+					}
+				}				
+			}
+		}
+	}
+	/*
+	grouping ospf_ospfv2comm_ospfv2comm_oper_type {
+		description "";
+		container ospfSites {
+			description "";
+			list ospfSite {
+				key "processId";
+				description "";
+				leaf processId {
+					type "uint32";
+					description "";
+				}
+				leaf routerId {
+					type "pub-type:ipv4Address";
+					description "";
+				}
+				leaf vrfName {
+					when "(../vrfName = null)";
+					type "string";
+					description "";
+				}
+				leaf description {
+					type "string";
+					description "";
+				}
+				leaf bandwidthReference {
+					type "uint32";
+					default 100;
+					description "";
+				}
+				leaf opaqueCapabilityFlag {
+					type "boolean";
+					description "";
+				}
+				leaf meshGroupFlag {
+					type "boolean";
+					description "";
+				}
+				leaf rfc1583CompatibleFlag {
+					type "boolean";
+					default true;
+					description "";
+				}
+				leaf lsaArrivalFlag {
+					type "boolean";
+					description "";
+				}
+				leaf lsaArrivalInterval {
+					when "../lsaArrivalFlag = 'true'";
+					type "uint32";
+					description "";
+				}
+				leaf lsaArrivalMaxInterval {
+					when "../lsaArrivalFlag != 'true'";
+					type "uint32";
+					default 1000;
+					description "";
+				}
+				leaf lsaArrivalStartInterval {
+					when "../lsaArrivalFlag != 'true'";
+					type "uint32";
+					default 500;
+					description "";
+				}
+				leaf lsaArrivalHoldInterval {
+					when "../lsaArrivalFlag != 'true'";
+					type "uint32";
+					default 500;
+					description "";
+				}
+				leaf lsaOriginateIntervalFlag {
+					type "boolean";
+					description "";
+				}
+				leaf lsaOriginateInterval {
+					when "(../lsaOriginateIntervalFlag != 'true')";
+					type "uint32";
+					default 5;
+					description "";
+				}
+				leaf lsaOriginateMaxInterval {
+					when "(../lsaOriginateIntervalFlag != 'true')";
+					type "uint32";
+					default 5000;
+					description "";
+				}
+				leaf lsaOriginateStartInterval {
+					when "(../lsaOriginateIntervalFlag != 'true')";
+					type "uint32";
+					default 500;
+					description "";
+				}
+				leaf lsaOriginateHoldInterval {
+					when "(../lsaOriginateIntervalFlag != 'true')";
+					type "uint32";
+					default 1000;
+					description "";
+				}
+				leaf spfScheduleIntervalType {
+					type "ospfv2commSpfIntevalFlag";
+					default intelligent-timer;
+					description "";
+				}
+				leaf spfScheduleInterval {
+					when "(../spfScheduleIntervalType = 'timer')";
+					type "uint32";
+					description "spf-schedule-interval";
+				}
+				leaf spfScheduleIntervalMillisecond {
+					when "(../spfScheduleIntervalType = 'millisecond')";
+					type "uint32";
+					description "spf-schedule-interva2(millisecond)";
+				}
+				leaf spfScheduleMaxInterval {
+					when "(../spfScheduleIntervalType = 'intelligent-timer')";
+					type "uint32";
+					default 10000;
+					description "";
+				}
+				leaf spfScheduleStartInterval {
+					when "(../spfScheduleIntervalType = 'intelligent-timer')";
+					type "uint32";
+					default 500;
+					description "";
+				}
+				leaf spfScheduleHoldInterval {
+					when "(../spfScheduleIntervalType = 'intelligent-timer')";
+					type "uint32";
+					default 1000;
+					description "";
+				}
+				leaf spfConservFlag {
+					when "(../spfScheduleIntervalType = 'intelligent-timer')";
+					type "boolean";
+					default false;
+					description "If true, Delay SPF by the maximum interval till network is stable";
+				}
+				leaf bfdAllInterfacesFlag {
+					type "boolean";
+					description "";
+				}
+				leaf bfdRxCfgFlag {
+					type "boolean";
+					description "BFD Min-rx interval flag";
+				}
+				leaf bfdMinRxInterval {
+					when "../bfdRxCfgFlag = 'true'";
+					type "uint32";
+					description "";
+				}
+				leaf bfdTxCfgFlag {
+					type "boolean";
+					description "BFD Min-tx interval flag";
+				}
+				leaf bfdMinTxInterval {
+					when "../bfdTxCfgFlag = 'true'";
+					type "uint32";
+					description "";
+				}
+				leaf bfdDetectMultiplierInterval {
+					type "uint32";
+					description "";
+				}
+				leaf frrBindingFlag {
+					type "boolean";
+					description "";
+				}
+				leaf silentAllInterfaceFlag {
+					type "boolean";
+					description "";
+				}
+				leaf retransmissionLimitFlag {
+					type "boolean";
+					description "";
+				}
+				leaf retransmissionLimit {
+					when "../retransmissionLimitFlag = 'true'";
+					type "uint32";
+					description "";
+				}
+				leaf stubRouterFlag {
+					type "ospfv2commStubRouterFlag";
+					default NoConfig;
+					description "";
+				}
+				leaf stubRouterOnStartupInterval {
+					when "../stubRouterFlag = 'StubOnBoot'";
+					type "uint32";
+					description "";
+				}
+				leaf stubRouIncStub {
+					when "(../stubRouterFlag != 'NoConfig')";
+					type "boolean";
+					description "This field is for stub-router include-stub";
+				}
+				leaf stubRouExtLsa {
+					when "(../stubRouterFlag != 'NoConfig')";
+					type "boolean";
+					description "This field is for stub-router external-lsa";
+				}
+				leaf stubRouExtCost {
+					when "(../stubRouterFlag != 'NoConfig') or (../stubRouExtLsa = 'true')";
+					type "uint32";
+					description "This field is for stub-router external-lsa overridding metric";
+				}
+				leaf stubRouSumLsa {
+					when "(../stubRouterFlag != 'NoConfig')";
+					type "boolean";
+					description "This field is for stub-router summary-lsa";
+				}
+				leaf stubRouSumCost {
+					when "(../stubRouterFlag != 'NoConfig') or (../stubRouSumLsa = 'true')";
+					type "uint32";
+					description "This field is for stub-router summary-lsa overridding metric";
+				}
+				leaf routeTagDisableFlag {
+					when "(../vrfName != '_public_' and ../vrfName != null) or (../routeTagFlag != 'true')";
+					type "boolean";
+					description "";
+				}
+				leaf routeTagFlag {
+					when "(../vrfName != '_public_' and ../vrfName != 'null') or not(../vrfName = '_public_' and ../vrfName = 'null') or (../routeTagDisableFlag != 'true') or (../routeTagDisableFlag != 'true' and ../vrfName != '_public_' and ../vrfName != 'null')";
+					type "boolean";
+					description "";
+				}
+				leaf routeTag {
+					when "not(../vrfName = '_public_' and ../vrfName = null) or (../routeTagFlag = 'true') or (../routeTagFlag = 'true' and ../vrfName = '_public_' and ../vrfName = null)";
+					type "uint32";
+					description "";
+				}
+				leaf vpnInstanceCapabilitySimpleFlag {
+					when "../vrfName != '_public_' and ../vrfName != null";
+					type "boolean";
+					description "";
+				}
+				leaf safeSyncFlag {
+					type "boolean";
+					description "safe-sync";
+				}
+				leaf trafficAdj {
+					when "(../multicastRpfRouteFlag != 'true')";
+					type "boolean";
+					description "";
+				}
+				leaf trafficAdv {
+					when "../trafficAdj = 'true'";
+					type "boolean";
+					description "";
+				}
+				leaf multicastRpfRouteFlag {
+					when "(../vrfName = '_public_' and ../vrfName = null) or (../trafficAdj = 'true' and ../vrfName = '_public_')";
+					type "boolean";
+					description "";
+				}
+				leaf advMplsLsrId {
+					when "../vrfName = '_public_' or ../vrfName = null";
+					type "boolean";
+					description "";
+				}
+				leaf advMplsLsrIdCost {
+					when "(../advMplsLsrId = 'true')";
+					type "uint32";
+					description "Cost of advertised MPLS LSR-ID";
+				}
+				leaf ecaRouteFlag {
+					when "../vrfName != '_public_' and ../vrfName != null";
+					type "boolean";
+					description "ECA Route Flag";
+				}
+				leaf domainIdNullFlag {
+					when "../vrfName != '_public_' and ../vrfName != null";
+					type "boolean";
+					description "";
+				}
+				leaf suppressReachability {
+					type "boolean";
+					description "suppress its own prefixes and ignore the suppressed prefixes";
+				}
+				leaf mplsLdpAutoConfig {
+					type "ospfv2ProcAutoCfgState";
+					default None;
+					description "Auto configure MPLS LDP on all interfaces under this process";
+				}
+				leaf shutDownFlg {
+					type "boolean";
+					default false;
+					description "Shutdown OSPF Service";
+				}
+				leaf borderRouter {
+					type "ospfv2commBorderRouter";
+					config "false";
+					description "borderRouter";
+				}
+				leaf IETFMode {
+					type "ospfv2commIETFMode";
+					config "false";
+					description "IETFMode";
+				}
+				leaf spfCount {
+					type "uint32";
+					config "false";
+					description "spfCount";
+				}
+				leaf areaCount {
+					type "uint32";
+					config "false";
+					description "";
+				}
+				leaf nssaCount {
+					type "uint32";
+					config "false";
+					description "";
+				}
+				leaf exchangeAndLoadingNerghbor {
+					type "uint32";
+					config "false";
+					description "";
+				}
+				must "(vrfName != '_public_' and vrfName != null) and (advMplsLsrId = 'false' and multicastRpfRouteFlag = 'false' and routeTagDisableFlag != 'false' and routeTagFlag != 'false' and vpnInstanceCapabilitySimpleFlag != 'false' and ecaRouteFlag != 'false' and domainIdNullFlag != 'false')"{
+					error-message "vrfName is not null and vrfName is not '_public_' then advMplsLsrId/multicastRpfRouteFlag must be false,routeTagDisableFlag/routeTagFlag/vpnInstanceCapabilitySimpleFlag/ecaRouteFlag/domainIdNullFlag must not be false";
+				}
+				must "routeTagFlag = 'true' and routeTagDisableFlag = 'false'"{
+					error-message "routeTagFlag is true then routeTagDisableFlag must be false";
+				}
+				container ProcessTopologys {
+					description "";
+					list ProcessTopology {
+						key "topoName";
+						description "";
+						leaf topoName {
+							type "string";
+							description "";
+						}
+						leaf maxLoadBalancing {
+							type "uint32";
+							description "";
+						}
+						leaf defaultCost {
+							when "(../defaultCostInheritMetricFlag != 'true')";
+							type "uint32";
+							default 1;
+							description "";
+						}
+						leaf defaultCostInheritMetricFlag {
+							type "boolean";
+							description "";
+						}
+						leaf defaultTag {
+							type "uint32";
+							default 1;
+							description "";
+						}
+						leaf defaultType {
+							type "ospfv2commExternalRouteType";
+							default Type2;
+							description "";
+						}
+						leaf avoidMicroloopFrrDisable {
+							type "boolean";
+							description "";
+						}
+						leaf avoidMicroloopFrrDelay {
+							type "uint32";
+							default 100;
+							description "";
+						}
+						container asbrSummaryMTs {
+							description "";
+							list asbrSummaryMT {
+								key "ipAddress addressmask";
+								description "Configure aggregate addresses for OSPF(only for ASBR)";
+								leaf ipAddress {
+									type "pub-type:ipv4Address";
+									description "IP address";
+								}
+								leaf addressmask {
+									type "pub-type:ipv4Address";
+									description "IP address mask";
+								}
+								leaf cost {
+									type "uint32";
+									description "Set cost";
+								}
+								leaf distributeDelayInterval {
+									type "uint32";
+									description "Set distribute delay";
+								}
+								leaf notAdvertiseFlag {
+									type "ospfv2AsbrSumStatus";
+									description "Do not advertise";
+								}
+								leaf tag {
+									type "uint32";
+									description "Set tag";
+								}
+								leaf count {
+									type "uint32";
+									config "false";
+									description "Show count value";
+								}
+								leaf generateNullZero {
+									when "(../notAdvertiseFlag != 'DoNot Advertise')";
+									type "boolean";
+									description "Generate Null0 route";
+								}
+								container asbrSummarizedPrefixMTs {
+									description "";
+									list asbrSummarizedPrefixMT {
+										config "false";
+										description "Destination IP";
+										leaf destIpAddress {
+											type "pub-type:ipv4Address";
+											config "false";
+											description "Destination IP";
+										}
+										leaf mask {
+											type "pub-type:ipv4Address";
+											config "false";
+											description "Mask";
+										}
+										leaf protocol {
+											type "ospfv2commImptRtProtocol";
+											config "false";
+											description "Protocol";
+										}
+										leaf protoProcId {
+											type "uint32";
+											config "false";
+											description "Protocol Process ID";
+										}
+										leaf type {
+											type "uint32";
+											config "false";
+											description "";
+										}
+										leaf metric {
+											type "uint32";
+											config "false";
+											description "Metric";
+										}
+									}
+								}
+							}
+						}
+						container defaultRouteMTs {
+							description "";							
+							container defaultRouteMT {
+								description "Default route advertise";
+								
+								leaf defRoutEnableFlag {
+									type "boolean";
+									description "Flag to configure or unconfigure default route advertise";
+								}
+								leaf configCost {
+									when "(../defRoutEnableFlag = 'true') or (../flag = 'DefRtAdv') or (../flag = 'Always')";
+									type "boolean";
+									description "configCost flag";
+								}
+								leaf cost {
+									when "(../defRoutEnableFlag = 'true') or (../configCost = 'true')";
+									type "uint32";
+									description "cost to advertise";
+								}
+								leaf configType {
+									when "(../flag != 'Summary') or (../defRoutEnableFlag = 'true') or (../flag = 'DefRtAdv') or (../flag = 'Always')";
+									type "boolean";
+									description "configType flag";
+								}
+								leaf type {
+									when "(../configType = 'true') or (../flag != 'Summary') or (../defRoutEnableFlag = 'true')";
+									type "ospfv2commExternalRouteType";
+									default Type2;
+									description "type to advertise";
+								}
+								leaf flag {
+									when "(../defRoutEnableFlag = 'true')";
+									type "ospfv2commDefRtConfigFlag";
+									default DefRtAdv;
+									description "config always.PermCalcOth,Summary";
+								}
+								leaf permitCalculateOther {
+									when "(../flag != 'Summary') or (../defRoutEnableFlag = 'true') or (../flag = 'DefRtAdv') or (../flag != 'Always')";
+									type "boolean";
+									description "PermCalcOthFlg flag";
+								}
+								leaf routePolicyName {
+									when "(../flag != 'Summary') or (../defRoutEnableFlag = 'true') or (../flag = 'DefRtAdv') or (../flag = 'Always') or (../policyType = 'route_policy') or (../policyType != 'None')";
+									type "string";
+									description "";
+								}
+								leaf delayTimer {
+									when "(../flag != 'Summary') or (../defRoutEnableFlag = 'true') or (../flag = 'DefRtAdv') or (../flag = 'Always')";
+									type "uint32";
+									description "Distribute delay timer";
+								}
+								leaf policyType {
+									when "(../defRoutEnableFlag = 'true')";
+									type "ospfv2commRoutePolicy";
+									description "";
+								}
+								leaf routeFilterName {
+									when "(../policyType != 'route_policy') or (../policyType = 'route_filter') or (../policyType != 'None')";
+									type "string";
+									description "";
+								}
+							}
+						}
+						container preferenceMTs {
+							description "";
+							list preferenceMT {
+								key "routeType";
+								description "";
+								leaf routeType {
+									type "ospfv2commOspfRouteType";
+									description "";
+								}
+								leaf preference {
+									type "uint32";
+									description "";
+								}
+								leaf routePolicyName {
+									when "(../policyType != 'route_filter') or (../policyType = 'route_policy') or (../policyType != 'None')";
+									type "string";
+									description "";
+								}
+								leaf policyType {
+									type "ospfv2commRoutePolicy";
+									description "";
+								}
+								leaf routeFilterName {
+									when "(../policyType = 'route_filter') or (../policyType != 'route_policy') or (../policyType != 'None')";
+									type "string";
+									description "";
+								}
+							}
+						}
+						container nexthopMTs {
+							description "";
+							list nexthopMT {
+								key "ipAddress";
+								description "";
+								leaf ipAddress {
+									type "pub-type:ipv4Address";
+									description "";
+								}
+								leaf weight {
+									type "uint32";
+									mandatory "true";
+									description "";
+								}
+							}
+						}
+						container filterPolicyMTs {
+							description "";
+							list filterPolicyMT {
+								key "filterType protocol protocolProcessId";
+								description "";
+								leaf type {
+									type "ospfv2commFilterPolicy";
+									mandatory "true";
+									description "";
+								}
+								leaf aclNameOrNum {
+									when "(../type != 'ip_prefix') or (../type = 'acl_name_or_num') or (../type != 'route_policy' and ../filterType != 'import') or (../type != 'route_filter' and ../filterType != 'import') or (../type != 'route_policy' and ../filterType != 'export')";
+									type "string";
+									description "";
+								}
+								leaf ipPrefix {
+									when "(../type = 'ip_prefix') or (../type != 'acl_name_or_num') or (../type != 'route_policy' and ../filterType != 'import') or (../type != 'route_filter' and ../filterType != 'import') or (../type != 'route_policy' and ../filterType != 'export')";
+									type "string";
+									description "";
+								}
+								leaf routePolicy {
+									when "(../type != 'ip_prefix') or (../filterType != 'export') or (../type != 'acl_name_or_num') or (../type = 'route_policy' and ../filterType = 'import') or (../type != 'route_filter' and ../filterType != 'import') or (../type != 'route_policy' and ../filterType != 'export')";
+									type "string";
+									description "";
+								}
+								leaf routeFilterName {
+									when "(../type != 'ip_prefix') or (../filterType != 'export') or (../type != 'acl_name_or_num') or (../type != 'route_policy' and ../filterType != 'import') or (../type = 'route_filter' and ../filterType = 'import')";
+									type "string";
+									description "";
+								}
+								leaf secondary {
+									when "(../type != 'ip_prefix') or (../filterType != 'export') or (../type != 'acl_name_or_num') or (../type = 'route_policy' and ../filterType = 'import') or (../type = 'route_filter' and ../filterType = 'import') or (../type != 'route_policy' and ../filterType != 'export')";
+									type "boolean";
+									default false;
+									description "";
+								}
+								leaf filterType {
+									type "ospfv2commFilterType";
+									description "";
+								}
+								leaf protocol {
+									when "(../filterType = 'export') or (../filterType != 'import')";
+									type "ospfv2commFilterRtProtocol";
+									description "";
+								}
+								leaf protocolProcessId {
+									when "(../protocol != 'bgp') or (../protocol != 'static') or (../protocol != 'direct') or (../protocol != 'direct' and ../protocol != 'static' and ../protocol != 'bgp' and ../protocol != 'default') or (../filterType = 'export') or (../filterType != 'import') or (../protocol != 'default' and ../filterType != 'export')";
+									type "uint32";
+									description "";
+								}
+							}
+						}
+						container importRouteMTs {
+							description "";
+							list importRouteMT {
+								key "protocol protocolProcessId";
+								description "";
+								leaf protocol {
+									type "ospfv2commImporttRtProtocol";
+									description "";
+								}
+								leaf protocolProcessId {
+									when "(../protocol != 'bgp') or (../protocol != 'static') or (../protocol != 'direct') or (../protocol = 'direct' and ../protocol = 'static' and ../protocol = 'bgp') or (../protocol != 'direct' and ../protocol != 'static' and ../protocol != 'bgp')";
+									type "uint32";
+									description "";
+								}
+								leaf costConfigFlag {
+									type "boolean";
+									default false;
+									description "Enable Cost configuration";
+								}
+								leaf cost {
+									when "(../costConfigFlag = 'true')";
+									type "uint32";
+									default 1;
+									description "";
+								}
+								leaf tagConfigFlag {
+									type "boolean";
+									default false;
+									description "Enable tag configuration";
+								}
+								leaf tag {
+									when "(../tagConfigFlag = 'true')";
+									type "uint32";
+									default 1;
+									description "";
+								}
+								leaf typeConfigFlag {
+									type "boolean";
+									default false;
+									description "Enable type configuration";
+								}
+								leaf type {
+									when "(../typeConfigFlag = 'true')";
+									type "ospfv2commExternalRouteType";
+									default Type2;
+									description "";
+								}
+								leaf routePolicyName {
+									when "(../policyType = 'route_policy') or (../policyType != 'route_filter') or (../policyType != 'None')";
+									type "string";
+									description "";
+								}
+								leaf policyType {
+									type "ospfv2commRoutePolicy";
+									description "";
+								}
+								leaf routeFilterName {
+									when "(../policyType != 'route_policy') or (../policyType = 'route_filter') or (../policyType != 'None')";
+									type "string";
+									description "";
+								}
+								leaf permitIbgpFlag {
+									when "(../protocol = 'bgp') or (../protocol != 'static') or (../protocol != 'direct') or (../protocol = 'direct' and ../protocol = 'static' and ../protocol = 'bgp')";
+									type "boolean";
+									description "permitIbgpFlag";
+								}
+							}
+						}
+						container routePriorityMTs {
+							description "";
+							list routePriorityMT {
+								key "priority";
+								description "";
+								leaf priority {
+									type "ospfv2commPrefixPriority";
+									description "";
+								}
+								leaf ipPrefixName {
+									type "string";
+									mandatory "true";
+									description "";
+								}
+							}
+						}
+						container ecmpPreferMTs {
+							description "";
+							container ecmpPreferMT {
+								description "ECMP preference selection for next hops";
+								leaf teTunnelFlag {
+									when "(../intactFlag != 'true')";
+									type "boolean";
+									default false;
+									description "Select only te-tunnel interfaces for ECMP";
+								}
+								leaf intactFlag {
+									when "(../teTunnelFlag != 'true')";
+									type "boolean";
+									default false;
+									description "Include at least one native IGP next hop in ECMP list along with te-tunnel interfaces";
+								}
+							}
+						}
+					}
+				}
+				container ospfFRRs {
+					description "";
+					container ospfFRR {
+						description "Enable FRR";
+						leaf frrEnableFlag {
+							type "boolean";
+							default false;
+							description "Enable FRR";
+						}
+						leaf lfaFlag {
+							when "(../frrEnableFlag = 'true')";
+							type "boolean";
+							default false;
+							description "loop-free-alternate";
+						}
+						leaf rLfaFlag {
+							type "boolean";
+							default false;
+							description "remote_loop-free-alternate";
+						}
+						leaf rLfaMaxCost {
+							when "(../rLfaFlag = 'true')";
+							type "uint32";
+							default 4294967295;
+							description "";
+						}
+						container frrMTs {
+							description "";
+							list frrMT {
+								key "topoName";
+								description "";
+								leaf topoName {
+									type "string";
+									description "";
+								}
+								container frrRoutePolicyMTs {
+									description "";
+									container frrRoutePolicyMT {
+										description "FRR Route Policy";
+										leaf policyType {
+											type "ospfv2commRoutePolicy";
+											description "Route policy name";
+										}
+										leaf routePolicyName {
+											when "(../policyType != 'None')";
+											type "string";
+											description "Route policy name";
+										}
+										leaf routeFilterName {
+											when "(../policyType != 'None')";
+											type "string";
+											description "Route fitler name";
+										}
+									}
+								}
+								container remoteLfaIpPrefixMTs {
+									description "";
+									container remoteLfaIpPrefixMT {
+										description "ip prefix name";
+										leaf ipPrefixName {
+											type "string";
+											description "ip Prefix name";
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+				container ospfLocalMts {
+					description "";
+					container ospfLocalMt {
+						when "(../../vrfName = '_public_' and ../../vrfName = null)";
+						description "";
+						leaf type {
+							type "ospfv2commFilterPolicy";
+							description "";
+						}
+						leaf aclNameOrNum {
+							when "(../type = 'acl_name_or_num') or (../type != 'ip_prefix') or (../type != 'route_policy') or (../type != 'route_filter')";
+							type "string";
+							description "aclNameOrNum名";
+						}
+						leaf ipPrefix {
+							when "(../type != 'acl_name_or_num') or (../type = 'ip_prefix') or (../type != 'route_policy') or (../type != 'route_filter')";
+							type "string";
+							description "";
+						}
+						leaf routePolicy {
+							when "(../type != 'acl_name_or_num') or (../type != 'ip_prefix') or (../type = 'route_policy') or (../type != 'route_filter')";
+							type "string";
+							description "";
+						}
+						leaf routeFilterName {
+							when "(../type != 'acl_name_or_num') or (../type != 'ip_prefix') or (../type != 'route_policy') or (../type = 'route_filter')";
+							type "string";
+							description "";
+						}
+					}
+				}
+				container peers {
+					description "";
+					list peer {
+						key "ipAddress";
+						description "";
+						leaf ipAddress {
+							type "pub-type:ipv4Address";
+							description "";
+						}
+						leaf drPriority {
+							type "uint8";
+							default 1;
+							description "";
+						}
+					}
+				}
+				container ospfPeerLsaOuts {
+					description "";
+					list ospfPeerLsaOut {
+						key "peerIPAddr";
+						description "Configure LSA Filtering policy for static peer";
+						leaf peerIPAddr {
+							type "pub-type:ipv4Address";
+							description "IP address of the Static neighbor";
+						}
+						leaf allFlag {
+							when "(../nssaFlag = 'false' and ../sumFlag = 'false' and ../aseFlag = 'false')";
+							type "boolean";
+							description "Block all LSA types";
+						}
+						leaf sumFlag {
+							when "(../allFlag != 'true')";
+							type "boolean";
+							description "Block summary LSAs";
+						}
+						leaf sumFilterType {
+							when "(../sumFlag = 'true')";
+							type "ospfv2commFilterLsaOutPolicy";
+							default none;
+							description "";
+						}
+						leaf sumFilterName {
+							when "(../sumFilterType != 'none')";
+							type "string";
+							description "Configure filter name or num for summary LSAs";
+						}
+						leaf aseFlag {
+							when "(../allFlag != 'true')";
+							type "boolean";
+							description "Block AS external LSAs";
+						}
+						leaf aseFilterType {
+							when "(../aseFlag = 'true')";
+							type "ospfv2commFilterLsaOutPolicy";
+							default none;
+							description "";
+						}
+						leaf aseFilterName {
+							when "(../aseFlag != 'true') or (../aseFlag = 'true') or (../aseFilterType != 'none')";
+							type "string";
+							description "Configure filter name or num for summary LSAs";
+						}
+						leaf nssaFlag {
+							when "(../allFlag != 'true')";
+							type "boolean";
+							description "Block NSSA LSAs";
+						}
+						leaf nssaFilterType {
+							when "(../nssaFlag = 'true')";
+							type "ospfv2commFilterLsaOutPolicy";
+							default none;
+							description "";
+						}
+						leaf nssaFilterName {
+							when "(../nssaFilterType != 'none')";
+							type "string";
+							description "Configure filter name or number for NSSA";
+						}
+					}
+				}
+				container ospfSilentInterfaces {
+					description "";
+					list ospfSilentInterface {
+						key "ifName";
+						description "";
+						leaf ifName {
+							//type leafref {
+                            //   path "/inv:inventory-oper/inv:nes/inv:ne/ifm:ifm-oper/ifm:interfaces/ifm:interface/ifm:ifName";
+                            //}	
+							type "string";
+							description "";
+						}
+						leaf schemaUndoIntf {
+							when "(../../../silentAllInterfaceFlag = 'true')";
+							type "boolean";
+							description "";
+						}
+					}
+				}
+				container areas {
+					description "";
+					list area {
+						key "areaId";
+						description "";
+						leaf areaId {
+							type "pub-type:ipv4Address";
+							description "";
+						}
+						leaf areaType {
+							type "ospfv2commAreaType";
+							default Normal;
+							description "";
+						}
+						leaf descriptionArea {
+							type "string";
+							description "Area Description";
+						}
+						leaf authenticationMode {
+							type "ospfv2commAreaAuthenMode";
+							default none;
+							description "";
+						}
+						leaf authTextSimple {
+							when "(../authenticationMode = 'simple') or (../authenticationMode != 'none') or (../authenticationMode != 'md5') or (../authenticationMode != 'hmac-md5') or (../authenticationMode != 'keychain') or (../authenticationMode != 'hmac-sha256')";
+							type "pub-type:passwordOSPF";
+							description "";
+						}
+						leaf keyId {
+							when "(../authenticationMode != 'simple') or (../authenticationMode != 'none') or (../authenticationMode = 'md5') or (../authenticationMode = 'hmac-md5') or (../authenticationMode != 'keychain') or (../authenticationMode = 'hmac-sha256')";
+							type "uint32";
+							description "";
+						}
+						leaf authTextMd5 {
+							when "(../authenticationMode != 'simple') or (../authenticationMode != 'none') or (../authenticationMode = 'md5') or (../authenticationMode = 'hmac-md5') or (../authenticationMode != 'keychain') or (../authenticationMode = 'hmac-sha256')";
+							type "pub-type:passwordExtend";
+							description "";
+						}
+						leaf stubNoSummary {
+							when "(../areaType != 'Normal') or (../areaType = 'Nssa') or (../areaType = 'Stub')";
+							type "boolean";
+							description "";
+						}
+						leaf nssaTranslatorAlways {
+							when "(../areaType = 'Nssa')";
+							type "boolean";
+							description "NSSA translator role always";
+						}
+						leaf nssaDefaultRouteAdvertise {
+							when "(../areaType = 'Nssa')";
+							type "boolean";
+							description "Originate Type 7 default into NSSA area";
+						}
+						leaf nssaBackbonePeerIr {
+							when "../nssaDefaultRouteAdvertise = 'true'";
+							type "boolean";
+							description "Ignore backbone peer into NSSA area";
+						}
+						leaf nssaNoImportRoute {
+							when "(../areaType = 'Nssa')";
+							type "boolean";
+							description "No redistribution into this NSSA area";
+						}
+						leaf nssaSetNbit {
+							when "(../areaType = 'Nssa')";
+							type "boolean";
+							description "Set n bit in DD packet in NSSA area";
+						}
+						leaf nssaSuppressForwardingAddress {
+							when "(../areaType = 'Nssa')";
+							type "boolean";
+							description "Suppress forwarding address for Translated Type-5 LSAs";
+						}
+						leaf nssaZeroAddressForwarding {
+							when "(../areaType = 'Nssa')";
+							type "boolean";
+							description "Allow zero forwarding address for Type-7 LSAs";
+						}
+						leaf nssaTranslatorInterval {
+							when "(../areaType = 'Nssa')";
+							type "int32";
+							default 40;
+							description "Translator interval";
+						}
+						leaf nssaTransState {
+							type "ospfv2NSSATransState";
+							config "false";
+							description "NSSA translator State";
+						}
+						leaf nssaTransRole {
+							type "ospfv2NSSATransRole";
+							default none;
+							config "false";
+							description "NSSA translator Role";
+						}
+						leaf nssaTransStabIntv {
+							type "boolean";
+							config "false";
+							description "NSSA translator Stability Interval";
+						}
+						leaf defaultCost {
+							when "(../areaType != 'Normal') or (../areaType = 'Nssa') or (../areaType = 'Stub')";
+							type "int32";
+							default 1;
+							description "";
+						}
+						leaf ldpSyncFlag {
+							type "boolean";
+							default false;
+							description "Enable LDP-OSPF synchronization";
+						}
+						leaf ldpMaxCostConfigFlag {
+							when "(../ldpInfiniteFlag != 'true') or (../ldpMaxCostConfigFlag != 'true')";
+							type "boolean";
+							default false;
+							description "Enable HoldMaxCost timer";
+						}
+						leaf ldpMaxCostInterval {
+							when "(../ldpInfiniteFlag != 'true') or (../ldpMaxCostConfigFlag = 'true')";
+							type "uint32";
+							default 10;
+							description "HoldMaxCost timer";
+						}
+						leaf ldpInfiniteFlag {
+							when "(../ldpMaxCostConfigFlag != 'true')";
+							type "boolean";
+							default true;
+							description "Always advertise the maximum cost";
+						}
+						leaf spfScheduleTimes {
+							type "uint32";
+							config "false";
+							description "";
+						}
+						leaf interfaceCount {
+							type "uint32";
+							config "false";
+							description "";
+						}
+						leaf rtrIdConState {
+							type "ospfv2RtrIdConState";
+							config "false";
+							description "Router ID conflict state";
+						}
+						container networks {
+							description "";
+							list network {
+								key "ipAddress wildcardMask";
+								description "";
+								leaf ipAddress {
+									type "pub-type:ipv4Address";
+									description "";
+								}
+								leaf wildcardMask {
+									type "pub-type:ipv4Address";
+									description "";
+								}
+								leaf description {
+									type "string";
+									description "";
+								}
+							}
+						}
+						container interfaces {
+							description "";
+							list interface {
+								key "ifName";
+								description "";
+								leaf ifName {
+									//type leafref {
+                                    //	path "/inv:inventory-oper/inv:nes/inv:ne/ifm:ifm-oper/ifm:interfaces/ifm:interface/ifm:ifName";
+                                    //}
+									type "string";
+									description "";
+								}
+								leaf networkType {
+									when "(../ifName != 'Tunnel')";
+									type "ospfv2commNetworkType";
+									description "";
+								}
+								leaf peerIpIgnore {
+									when "(../networkType = 'p2p')";
+									type "ospfPeerIpIgnoreType";
+									description "Peer Ip Ignore Flag";
+								}
+								leaf helloInterval {
+									when "(../ifName != 'LoopBack')";
+									type "int32";
+									description "";
+								}
+								leaf deadInterval {
+									type "int32";
+									description "";
+								}
+								leaf waitInterval {
+									type "uint32";
+									description "";
+								}
+								leaf pollInterval {
+									type "int32";
+									description "";
+								}
+								leaf transDelayInterval {
+									when "(../ifName != 'LoopBack')";
+									type "int32";
+									description "";
+								}
+								leaf retransmitInterval {
+									when "(../ifName != 'LoopBack')";
+									type "int32";
+									description "";
+								}
+								leaf mtuEnable {
+									when "(../ifName != 'LoopBack')";
+									type "boolean";
+									description "";
+								}
+								leaf silentEnable {
+									when "(../ifName != 'LoopBack')";
+									type "boolean";
+									config "false";
+									description "";
+								}
+								leaf drPriority {
+									when "(../ifName != 'LoopBack')";
+									type "int32";
+									description "";
+								}
+								leaf configCost {
+									when "(../ifName != 'LoopBack')";
+									type "uint32";
+									description "";
+								}
+								leaf smartDiscover {
+									when "(../ifName != 'LoopBack')";
+									type "boolean";
+									description "";
+								}
+								leaf p2mpMaskIgnore {
+									when "(../ifName != 'LoopBack')";
+									type "boolean";
+									description "";
+								}
+								leaf frrBlockFlag {
+									when "(../ifName != 'LoopBack')";
+									type "boolean";
+									description "";
+								}
+								leaf bfdblock {
+									when "(../ifName != 'LoopBack') or (../bfdEnable != 'true')";
+									type "boolean";
+									description "";
+								}
+								leaf bfdEnable {
+									when "(../ifName != 'LoopBack') or (../bfdblock != 'true')";
+									type "boolean";
+									description "";
+								}
+								leaf perLinkFlag {
+									when "(../bfdEnable = 'true' and ../ifName = 'Vlanif')";
+									type "boolean";
+									description "Per Link for Vlanif only";
+								}
+								leaf oneArmEchoFlag {
+									when "(../bfdEnable = 'true' and ../ifName = 'Vlanif')";
+									type "boolean";
+									description "Per Link for Vlanif only";
+								}
+								leaf bfdDetectMultiplierValue {
+									when "(../ifName != 'LoopBack')";
+									type "uint32";
+									description "";
+								}
+								leaf bfdMinTxInterval {
+									when "(../ifName != 'LoopBack')";
+									type "uint32";
+									description "";
+								}
+								leaf bfdMinRxInterval {
+									when "(../ifName != 'LoopBack')";
+									type "uint32";
+									description "";
+								}
+								leaf frrBindingFlag {
+									when "(../ifName != 'LoopBack')";
+									type "boolean";
+									description "";
+								}
+								leaf authenticationMode {
+									type "ospfv2commIntfAuthenMode";
+									default none;
+									description "";
+								}
+								leaf authTextSimple {
+									when "(../authenticationMode != 'hmac-md5') or (../authenticationMode = 'simple') or (../authenticationMode != 'none') or (../authenticationMode != 'keychain') or (../authenticationMode != 'null') or (../authenticationMode != 'md5') or (../authenticationMode != 'hmac-sha256')";
+									type "pub-type:passwordOSPF";
+									description "";
+								}
+								leaf keyId {
+									when "(../authenticationMode = 'hmac-md5') or (../authenticationMode != 'simple') or (../authenticationMode != 'none') or (../authenticationMode != 'keychain') or (../authenticationMode != 'null') or (../authenticationMode = 'md5') or (../authenticationMode = 'hmac-sha256')";
+									type "uint32";
+									description "";
+								}
+								leaf authTextMd5 {
+									when "(../authenticationMode = 'hmac-md5') or (../authenticationMode != 'simple') or (../authenticationMode != 'none') or (../authenticationMode != 'keychain') or (../authenticationMode != 'null') or (../authenticationMode = 'md5') or (../authenticationMode = 'hmac-sha256')";
+									type "pub-type:passwordExtend";
+									description "";
+								}
+								leaf ldpSyncBlock {
+									when "(../ifName != 'LoopBack') or (../ldpSynchronicEnable != 'true')";
+									type "boolean";
+									description "";
+								}
+								leaf ldpSynchronicEnable {
+									when "(../ifName != 'LoopBack') or (../ldpSyncBlock != 'true')";
+									type "boolean";
+									description "";
+								}
+								leaf maxCostFlag {
+									when "(../maxCostFlag != 'true') or (../infiniteFlag != 'true') or (../ifName != 'LoopBack')";
+									type "boolean";
+									description "";
+								}
+								leaf maxCostInterval {
+									when "(../maxCostFlag = 'true') or (../ifName != 'LoopBack')";
+									type "uint16";
+									default 10;
+									description "";
+								}
+								leaf infiniteFlag {
+									when "(../maxCostFlag != 'true') or (../ifName != 'LoopBack')";
+									type "boolean";
+									description "";
+								}
+								leaf ldpHoldDownInterval {
+									type "uint16";
+									default 10;
+									description "HoldDown timer";
+								}
+								leaf suppressReachability {
+									when "(../ifName != 'LoopBack')";
+									type "ospfv2SupprReach";
+									default "Not Configured";
+									description "Suppress Reahability configuration.";
+								}
+								leaf linkCost {
+									when "(../ifName != 'LoopBack')";
+									type "uint32";
+									description "Low Link quality Cost.";
+								}
+								leaf mplsLdpAutoConfig {
+									when "(../ifName != 'LoopBack')";
+									type "ospfv2IfAutoCfgState";
+									default None;
+									description "Auto configure MPLS LDP on this interfaces";
+								}
+								leaf allFlag {
+									when "(../ifName != 'LoopBack') or (../sumFlag = 'false' and ../aseFlag = 'false' and ../nssaFlag = 'false')";
+									type "boolean";
+									description "Block all LSA types";
+								}
+								leaf sumFlag {
+									when "(../ifName != 'LoopBack') or (../allFlag != 'true')";
+									type "boolean";
+									description "Block summary LSAs";
+								}
+								leaf sumFilterType {
+									when "(../ifName != 'LoopBack') or (../sumFlag = 'true')";
+									type "ospfv2commFilterLsaOutPolicy";
+									default none;
+									description "";
+								}
+								leaf sumFilterName {
+									when "(../ifName != 'LoopBack') or (../sumFilterType != 'none')";
+									type "string";
+									description "Configure filter name or num for summary LSAs";
+								}
+								leaf aseFlag {
+									when "(../ifName != 'LoopBack') or (../allFlag != 'true')";
+									type "boolean";
+									description "Block AS external LSAs";
+								}
+								leaf aseFilterType {
+									when "(../ifName != 'LoopBack') or (../aseFlag = 'true')";
+									type "ospfv2commFilterLsaOutPolicy";
+									default none;
+									description "";
+								}
+								leaf aseFilterName {
+									when "(../ifName != 'LoopBack') or (../aseFilterType != 'none')";
+									type "string";
+									description "Configure filter name or num for summary LSAs";
+								}
+								leaf nssaFlag {
+									when "(../ifName != 'LoopBack') or (../allFlag != 'true')";
+									type "boolean";
+									description "Block NSSA LSAs";
+								}
+								leaf nssaFilterType {
+									when "(../ifName != 'LoopBack') or (../nssaFlag = 'true')";
+									type "ospfv2commFilterLsaOutPolicy";
+									default none;
+									description "";
+								}
+								leaf nssaFilterName {
+									when "(../ifName != 'LoopBack') or (../nssaFilterType != 'none')";
+									type "string";
+									description "Configure filter name or number for NSSA";
+								}
+								leaf dcnOpqBlkEnable {
+									type "boolean";
+									description "Block Type-10 DCN Opaque LSAs";
+								}
+								leaf rLfaDisable {
+									when "(../ifName != 'LoopBack')";
+									type "boolean";
+									description "";
+								}
+								leaf suppressReachabilityBlock {
+									type "ospfv2SupprReach";
+									default false;
+									config "false";
+									description "Suppress Reachability disabled";
+								}
+								leaf designatedRouter {
+									type "pub-type:ipv4Address";
+									config "false";
+									description "";
+								}
+								leaf backupDesignatedRouter {
+									type "pub-type:ipv4Address";
+									config "false";
+									description "";
+								}
+								leaf interfaceState {
+									type "ospfv2commIntfState";
+									config "false";
+									description "";
+								}
+								leaf mtu {
+									type "uint32";
+									config "false";
+									description "";
+								}
+								leaf interfaceIpAddress {
+									type "pub-type:ipv4Address";
+									config "false";
+									description "";
+								}
+								leaf interfaceCost {
+									type "int32";
+									config "false";
+									description "";
+								}
+								leaf grState {
+									type "ospfv2commGRState";
+									config "false";
+									description "";
+								}
+								leaf prevIntfState {
+									type "ospfv2commIntfState";
+									config "false";
+									description "previous interface state";
+								}
+								leaf opaqueId {
+									type "uint32";
+									config "false";
+									description "opaqueId";
+								}
+								leaf mplsTeLink {
+									type "boolean";
+									default false;
+									config "false";
+									description "mplsTeLink";
+								}
+								
+								container nbrStatistics {
+									description "";
+									list nbrStatistic {
+										config "false";
+										description "";
+										leaf interfaceIpAddr {
+											type "pub-type:ipv4Address";
+											config "false";
+											description "";
+										}
+										leaf nbrRouterId {
+											type "pub-type:ipv4Address";
+											config "false";
+											description "";
+										}
+										leaf nbrIpAddr {
+											type "pub-type:ipv4Address";
+											config "false";
+											description "";
+										}
+										leaf grState {
+											type "ospfv2commNbrDispGRState";
+											config "false";
+											description "GR state";
+										}
+										leaf nbrState {
+											type "ospfv2commNbrState";
+											config "false";
+											description "";
+										}
+										leaf nbrMode {
+											type "ospfv2commNbrMode";
+											config "false";
+											description "";
+										}
+										leaf nbrPriority {
+											type "int32";
+											config "false";
+											description "";
+										}
+										leaf nbrDR {
+											type "pub-type:ipv4Address";
+											config "false";
+											description "";
+										}
+										leaf nbrBDR {
+											type "pub-type:ipv4Address";
+											config "false";
+											description "";
+										}
+										leaf nbrInterfaceMTU {
+											type "uint32";
+											config "false";
+											description "";
+										}
+										leaf deadDueTimer {
+											type "string";
+											config "false";
+											description "dead Due Timer";
+										}
+										leaf nbrRetranIntv {
+											type "uint32";
+											config "false";
+											description "nbrRetranIntv";
+										}
+										leaf nbrUpTime {
+											type "string";
+											config "false";
+											description "";
+										}
+										leaf nbrAuthenticationSequence {
+											type "uint32";
+											config "false";
+											description "";
+										}
+									}
+								}
+								container requestQueues {
+									description "";
+									list requestQueue {
+										config "false";
+										description "";
+										leaf routerId {
+											type "pub-type:ipv4Address";
+											config "false";
+											description "";
+										}
+										leaf nbrRouterId {
+											type "pub-type:ipv4Address";
+											config "false";
+											description "";
+										}
+										leaf nbrIpAddr {
+											type "pub-type:ipv4Address";
+											config "false";
+											description "";
+										}
+										leaf interfaceIpAddr {
+											type "pub-type:ipv4Address";
+											config "false";
+											description "";
+										}
+										leaf areaId {
+											type "pub-type:ipv4Address";
+											config "false";
+											description "";
+										}
+										leaf lsaType {
+											type "ospfv2commLsaType";
+											config "false";
+											description "";
+										}
+										leaf linkStateId {
+											type "pub-type:ipv4Address";
+											config "false";
+											description "";
+										}
+										leaf advertiseRouterId {
+											type "pub-type:ipv4Address";
+											config "false";
+											description "";
+										}
+										leaf lsaSequence {
+											type "string";
+											config "false";
+											description "";
+										}
+										leaf lsaAge {
+											type "uint32";
+											config "false";
+											description "";
+										}
+									}
+								}
+								container retransQueues {
+									description "";
+									list retransQueue {
+										config "false";
+										description "";
+										leaf routerId {
+											type "pub-type:ipv4Address";
+											config "false";
+											description "";
+										}
+										leaf nbrRouterId {
+											type "pub-type:ipv4Address";
+											config "false";
+											description "";
+										}
+										leaf nbrIpAddr {
+											type "pub-type:ipv4Address";
+											config "false";
+											description "";
+										}
+										leaf interfaceIpAddr {
+											type "pub-type:ipv4Address";
+											config "false";
+											description "";
+										}
+										leaf lsaType {
+											type "ospfv2commLsaType";
+											config "false";
+											description "";
+										}
+										leaf linkStateId {
+											type "pub-type:ipv4Address";
+											config "false";
+											description "";
+										}
+										leaf advertiseRouterId {
+											type "pub-type:ipv4Address";
+											config "false";
+											description "";
+										}
+										leaf lsaSequence {
+											type "string";
+											config "false";
+											description "";
+										}
+										leaf lsaAge {
+											type "uint32";
+											config "false";
+											description "";
+										}
+									}
+								}
+								container bfdStatistics {
+									description "";
+									list bfdStatistic {
+										config "false";
+										description "";
+										leaf routerId {
+											type "pub-type:ipv4Address";
+											config "false";
+											description "";
+										}
+										leaf neighbourRouterId {
+											type "pub-type:ipv4Address";
+											config "false";
+											description "";
+										}
+										leaf bfdState {
+											type "ospfv2commBFDState";
+											config "false";
+											description "";
+										}
+										leaf localIpAddr {
+											type "pub-type:ipv4Address";
+											config "false";
+											description "";
+										}
+										leaf remoteIpAddr {
+											type "pub-type:ipv4Address";
+											config "false";
+											description "";
+										}
+										leaf rxInterval {
+											type "uint32";
+											config "false";
+											description "Rx Interval";
+										}
+										leaf txInterval {
+											type "uint32";
+											config "false";
+											description "Tx Interval";
+										}
+										leaf multiplier {
+											type "uint32";
+											config "false";
+											description "Detect Multiplier";
+										}
+										leaf bfdLocalDis {
+											type "uint32";
+											config "false";
+											description "Local Discriminator";
+										}
+										leaf diagnosticInfo {
+											type "ospfBfdDiagInfoType";
+											config "false";
+											description "Diagnostic Information";
+										}
+									}
+								}
+								container ospfLdpSyncStatistics {
+									description "";
+									list ospfLdpSyncStatistic {
+										config "false";
+										description "";
+										leaf maxCostInterval {
+											type "uint16";
+											config "false";
+											description "";
+										}
+										leaf maxCostInfinite {
+											type "boolean";
+											config "false";
+											description "";
+										}
+										leaf ldpState {
+											type "ospfv2commLdpState";
+											config "false";
+											description "";
+										}
+										leaf ospfSyncState {
+											type "ospfv2commOSPFSyncState";
+											config "false";
+											description "";
+										}
+									}
+								}
+								container errorDatas {
+									description "";
+									list errorData {
+										config "false";
+										description "";
+										leaf ifName {
+											type "pub-type:ifName";
+											config "false";
+											description "Outgoing interface";
+										}
+										leaf rtrId {
+											type "pub-type:ipv4Address";
+											config "false";
+											description "Router Id";
+										}
+										leaf sameIpPktCnt {
+											type "uint32";
+											config "false";
+											description "IPv6: received my own packet";
+										}
+										leaf badPktCnt {
+											type "uint32";
+											config "false";
+											description "Bad packet";
+										}
+										leaf badVerCnt {
+											type "uint32";
+											config "false";
+											description "Bad version";
+										}
+										leaf badChkSumPktCnt {
+											type "uint32";
+											config "false";
+											description "Bad Checksum pkt count";
+										}
+										leaf badAreaPktCnt {
+											type "uint32";
+											config "false";
+											description "Bad area ID";
+										}
+										leaf pktRcvUnNumber {
+											type "uint32";
+											config "false";
+											description "Bad Receive unnumberd";
+										}
+										leaf badVirtLinkCnt {
+											type "uint32";
+											config "false";
+											description "Bad virtual link";
+										}
+										leaf authTypeFailCnt {
+											type "uint32";
+											config "false";
+											description "Bad authentication type";
+										}
+										leaf authKeyFailCnt {
+											type "uint32";
+											config "false";
+											description "Bad authentication key";
+										}
+										leaf shortPktCnt {
+											type "uint32";
+											config "false";
+											description "Packet too small";
+										}
+										leaf longPktCnt {
+											type "uint32";
+											config "false";
+											description "Packet larger than ip num";
+										}
+										leaf txErrCnt {
+											type "uint32";
+											config "false";
+											description "Transmit error";
+										}
+										leaf ifDownCnt {
+											type "uint32";
+											config "false";
+											description "Interface down";
+										}
+										leaf noNbr {
+											type "uint32";
+											config "false";
+											description "Unknown neighbor";
+										}
+										leaf misNetmaskCnt {
+											type "uint32";
+											config "false";
+											description "mis net mask count";
+										}
+										leaf misHelloIntlCnt {
+											type "uint32";
+											config "false";
+											description "Hello timer mismatch";
+										}
+										leaf misDeadIntlCnt {
+											type "uint32";
+											config "false";
+											description "Dead timer mismatch";
+										}
+										leaf misExtRouCapCnt {
+											type "uint32";
+											config "false";
+											description "Extern option mismatch";
+										}
+										leaf routerIdConfusion {
+											type "uint32";
+											config "false";
+											description "Router Id Confusion";
+										}
+										leaf vlinkNbrMisCnt {
+											type "uint32";
+											config "false";
+											description "Virtual neighbor unknown";
+										}
+										leaf nbmaNbrErrCnt {
+											type "uint32";
+											config "false";
+											description "NBMA neighbor unknown";
+										}
+										leaf invalSrcHeloCnt {
+											type "uint32";
+											config "false";
+											description "Virtual neighbor unknown";
+										}
+										leaf ddNbrLowCnt {
+											type "uint32";
+											config "false";
+											description "Neighbour state low";
+										}
+										leaf ddRtrIdCnt {
+											type "uint32";
+											config "false";
+											description "Router id confusion";
+										}
+										leaf ddOptMsMatchCnt {
+											type "uint32";
+											config "false";
+											description "Extern option mismatch";
+										}
+										leaf ddUnknwnLsaCnt {
+											type "uint32";
+											config "false";
+											description "Unknown LSA type";
+										}
+										leaf ddMtuMsMatchCnt {
+											type "uint32";
+											config "false";
+											description "MTU option mismatch";
+										}
+										leaf ackNbrLowCnt {
+											type "uint32";
+											config "false";
+											description "Neighbour state low";
+										}
+										leaf ackBadCnt {
+											type "uint32";
+											config "false";
+											description "Bad ack";
+										}
+										leaf ackDuplicateCnt {
+											type "uint32";
+											config "false";
+											description "Duplicate ack";
+										}
+										leaf ackUnknwnLsaCnt {
+											type "uint32";
+											config "false";
+											description "Unknown LSA type";
+										}
+										leaf reqNbrLowCnt {
+											type "uint32";
+											config "false";
+											description "Neighbour state low";
+										}
+										leaf reqEmptyCnt {
+											type "uint32";
+											config "false";
+											description "Empty request";
+										}
+										leaf reqBadCnt {
+											type "uint32";
+											config "false";
+											description "Bad request";
+										}
+										leaf updNbrLowCnt {
+											type "uint32";
+											config "false";
+											description "Neighbor state low";
+										}
+										leaf updSelfNewrCnt {
+											type "uint32";
+											config "false";
+											description "Newer self-generate LSA";
+										}
+										leaf updMinLSArrCnt {
+											type "uint32";
+											config "false";
+											description "Received LSA within LSA Arrival interval";
+										}
+										leaf updLsChkSumCnt {
+											type "uint32";
+											config "false";
+											description "LSA checksum bad";
+										}
+										leaf updLesRecentCnt {
+											type "uint32";
+											config "false";
+											description "Received less recent LSA";
+										}
+										leaf updUnknwLsaCnt {
+											type "uint32";
+											config "false";
+											description "Unknown LSA type";
+										}
+										leaf opq9floodCnt {
+											type "uint32";
+											config "false";
+											description "Opec 9 flood count";
+										}
+										leaf opq10floodCnt {
+											type "uint32";
+											config "false";
+											description "Opec 10 flood count";
+										}
+										leaf opq11floodCnt {
+											type "uint32";
+											config "false";
+											description "Opec 11 flood count";
+										}
+										leaf rxmtDDErrCnt {
+											type "uint32";
+											config "false";
+											description "Number for DD Packet";
+										}
+										leaf rxmtReqErrCnt {
+											type "uint32";
+											config "false";
+											description "Number for Request Packet";
+										}
+										leaf rxmtUpdErrCnt {
+											type "uint32";
+											config "false";
+											description "Number for Update Packet";
+										}
+										leaf grInvalidLsaCnt {
+											type "uint32";
+											config "false";
+											description "Number of invalid LSAs";
+										}
+										leaf grInvalidPolCnt {
+											type "uint32";
+											config "false";
+											description "Number of policy failed LSAs";
+										}
+										leaf grInvalidPrdCnt {
+											type "uint32";
+											config "false";
+											description "Number of wrong period LSAs";
+										}
+										leaf tunnelCostCnt {
+											type "uint32";
+											config "false";
+											description "Tunnel cost mistake";
+										}
+										leaf peerNetTypeCnt {
+											type "uint32";
+											config "false";
+											description "Neighbouring interface";
+										}
+									}
+								}
+							}
+						}
+						container areaMTs {
+							description "";
+							list areaMT {
+								key "topoName";
+								description "";
+								leaf topoName {
+									type "string";
+									description "";
+								}
+								container abrSummaryMTs {
+									description "";
+									list abrSummaryMT {
+										key "ipAddress addressMask";
+										description "Summarize routes matching prefix/length (border routers only)";
+										leaf ipAddress {
+											type "pub-type:ipv4Address";
+											description "IP address";
+										}
+										leaf addressMask {
+											type "pub-type:ipv4Address";
+											description "IP address mask";
+										}
+										leaf configCost {
+											when "(../inheritMinCost != 'true')";
+											type "boolean";
+											description "configCost flag";
+										}
+										leaf cost {
+											when "(../configCost = 'true')";
+											type "uint32";
+											description "Set cost";
+										}
+										leaf inheritMinCost {
+											when "(../configCost != 'true')";
+											type "boolean";
+											default false;
+											description "Inherit minimum cost";
+										}
+										leaf advertise {
+											when "(../generateNullZero != 'true')";
+											type "boolean";
+											default true;
+											description "Do not advertise this summary";
+										}
+										leaf generateNullZero {
+											type "boolean";
+											description "Generate Null0 route";
+										}
+									}
+								}
+								container areaMTFilters {
+									description "";
+									list areaMTFilter {
+										key "filterType";
+										description "";
+										leaf type {
+											type "ospfv2commAreaFilterPolicy";
+											default acl_name_or_num;
+											description "";
+										}
+										leaf aclNameOrNum {
+											when "(../type = 'acl_name_or_num') or " +
+											     "(../type = 'acl_num')";
+											type "string";
+											description "";
+										}
+										leaf ipPrefix {
+											when "(../type = 'ip_prefix')";
+											type "string";
+											description "";
+										}
+										leaf routePolicy {
+											when "(../type = 'route_policy')";
+											type "string";
+											description "";
+										}
+										leaf routeFilterName {
+											when "(../type = 'route_filter')";
+											type "string";
+											description "";
+										}
+										leaf filterType {
+											type "ospfv2commFilterType";
+											description "";
+										}
+										leaf incAggrFlag {
+											when "(../filterType = 'import')";
+											type "boolean";
+											default false;
+											description "Apply the filter on summarized prefixes also";
+										}
+									}
+								}
+							}
+						}
+						container ospfStaticPeers {
+							description "";
+							list ospfStaticPeer {
+								key "staticPeerId";
+								description "";
+								leaf staticPeerId {
+									type "uint32";
+									description "Forward point static peer ID";
+								}
+								leaf fpRouterId {
+									type "pub-type:ipv4Address";
+									description "";
+								}
+								leaf fpAddr {
+									type "pub-type:ipv4Address";
+									description "";
+								}
+								leaf fpMask {
+									type "pub-type:ipv4Address";
+									description "";
+								}
+								leaf remoteRouterId {
+									type "pub-type:ipv4Address";
+									description "";
+								}
+								leaf remoteAddr {
+									type "pub-type:ipv4Address";
+									description "";
+								}
+								leaf cost {
+									type "uint32";
+									default 1;
+									description "Cost to reach remote peer";
+								}
+								leaf mplsLsrId {
+									type "pub-type:ipv4Address";
+									description "";
+								}
+								leaf adjacencyAlways {
+									type "uint8";
+									default 1;
+									description "Adjacency-always";
+								}
+							}
+						}
+						container vLinks {
+							description "";
+							list vLink {
+								key "peerRtrId";
+								description "Peer Router ID";
+								leaf peerRtrId {
+									type "pub-type:ipv4Address";
+									description "Peer Router ID";
+								}
+								leaf helloInterval {
+									type "int32";
+									description "Time between Hello packets";
+								}
+								leaf deadInterval {
+									type "int32";
+									description "Interval after which a neighbor is declared dead";
+								}
+								leaf transDelayInterval {
+									type "int32";
+									description "Delay for Transmitting LSAs";
+								}
+								leaf retransmitInterval {
+									type "int32";
+									description "Interval for Retransmitting LSAs";
+								}
+								leaf smartDiscover {
+									type "boolean";
+									description "Indicates whether smart discover feature is enabled or not.";
+								}
+								leaf authenticationMode {
+									type "ospfv2commIntfAuthenMode";
+									default none;
+									description "";
+								}
+								leaf authTextSimple {
+									when "(../authenticationMode = 'hmac-sha256' and ../authenticationMode = 'md5' and ../authenticationMode = 'hmac-md5' and ../authenticationMode = 'simple') or (../authenticationMode = 'simple') or (../authenticationMode = 'none' and ../authenticationMode = null and ../authenticationMode = 'simple' and ../authenticationMode = 'keychain') or (../authenticationMode != 'keychain')";
+									type "pub-type:passwordOSPF";
+									description "";
+								}
+								leaf keyId {
+									when "(../authenticationMode = 'hmac-sha256' and ../authenticationMode = 'md5' and ../authenticationMode = 'hmac-md5' and ../authenticationMode = 'simple') or (../authenticationMode != 'simple') or (../authenticationMode != 'none' and ../authenticationMode != null and ../authenticationMode != 'simple' and ../authenticationMode != 'keychain') or (../authenticationMode != 'keychain')";
+									type "uint32";
+									description "";
+								}
+								leaf authTextMd5 {
+									when "(../authenticationMode = 'hmac-sha256' and ../authenticationMode = 'md5' and ../authenticationMode = 'hmac-md5' and ../authenticationMode = 'simple') or (../authenticationMode != 'simple') or (../authenticationMode != 'none' and ../authenticationMode != null and ../authenticationMode != 'simple' and ../authenticationMode != 'keychain') or (../authenticationMode != 'keychain')";
+									type "pub-type:passwordExtend";
+									description "";
+								}
+								leaf interfaceType {
+									type "ospfv2commIntfType";
+									config "false";
+									description "Virtual interface type";
+								}
+								leaf ifEvents {
+									type "uint32";
+									config "false";
+									description "vlink interface event";
+								}
+								leaf ifStatus {
+									type "ospfv2IfRowStatus";
+									config "false";
+									description "vlink interface status";
+								}
+								leaf ifLsaCount {
+									type "uint32";
+									config "false";
+									description "vlink lsa count";
+								}
+								leaf ifLsaCksumSum {
+									type "uint32";
+									config "false";
+									description "vlink lsa checksum sum";
+								}
+							}
+						}
+					}
+				}
+				container vlinkNbrStatistics {
+					description "";
+					list vlinkNbrStatistic {
+						config "false";
+						description "";
+						leaf areaId {
+							type "pub-type:ipv4Address";
+							config "false";
+							description "Transit area Id";
+						}
+						leaf interfaceIpAddress {
+							type "pub-type:ipv4Address";
+							config "false";
+							description "Self/Source IP Address";
+						}
+						leaf nbrRouterId {
+							type "pub-type:ipv4Address";
+							config "false";
+							description "Nbr Router ID";
+						}
+						leaf nbrIpAddr {
+							type "pub-type:ipv4Address";
+							config "false";
+							description "Nbr/Destination IP Address";
+						}
+						leaf nbrState {
+							type "ospfv2commNbrState";
+							config "false";
+							description "Nbr State";
+						}
+						leaf interfaceState {
+							type "ospfv2commIntfState";
+							config "false";
+							description "Virtual interface State";
+						}
+						leaf ifName {
+							type "pub-type:ifName";
+							config "false";
+							description "Outgoing interface name";
+						}
+						leaf type {
+							type "ospfv2commIntfType";
+							config "false";
+							description "Interface Type";
+						}
+						leaf grState {
+							type "ospfv2commNbrDispGRState";
+							config "false";
+							description "GR state";
+						}
+						leaf helloInterval {
+							type "int32";
+							config "false";
+							description "Time between two hello packets";
+						}
+						leaf deadInterval {
+							type "int32";
+							config "false";
+							description "Interval after which a neighbor is declared dead";
+						}
+						leaf transDelayInterval {
+							type "int32";
+							config "false";
+							description "Link state transmit delay(Second)";
+						}
+						leaf retransmitInterval {
+							type "int32";
+							config "false";
+							description "Retransmit interval";
+						}
+						leaf cost {
+							type "uint32";
+							config "false";
+							description "Cost to reach the Vlink end point";
+						}
+						leaf smartDiscover {
+							type "boolean";
+							config "false";
+							description "smart discovery flag";
+						}
+						leaf nbrOptions {
+							type "int32";
+							config "false";
+							description "neighbor options";
+						}
+						leaf nbrEvents {
+							type "uint32";
+							config "false";
+							description "nbr events";
+						}
+						leaf nbrLsRXQLen {
+							type "uint32";
+							config "false";
+							description "Cost to reach the Vlink end point";
+						}
+						leaf nbrHelloSupp {
+							type "boolean";
+							config "false";
+							description "Cost to reach the Vlink end point";
+						}
+						leaf nbrGRHelperAge {
+							type "uint32";
+							config "false";
+							description "Cost to reach the Vlink end point";
+						}
+						leaf helperExtReason {
+							type "ospfv2HelperExtReason";
+							config "false";
+							description "Cost to reach the Vlink end point";
+						}
+						leaf nbrGRHelperStat {
+							type "ospfv2NbrGRHelperStat";
+							config "false";
+							description "Indicates whether the router is acting as a graceful restart helper for the neighbor.";
+						}
+					}
+				}
+				container neighbors {
+					description "";
+					list neighbor {
+						config "false";
+						description "";
+						leaf areaId {
+							type "pub-type:ipv4Address";
+							config "false";
+							description "";
+						}
+						leaf ifName {
+							type "string";
+							config "false";
+							description "";
+						}
+						leaf nbrRouterId {
+							type "pub-type:ipv4Address";
+							config "false";
+							description "";
+						}
+						leaf nbrIpAddr {
+							type "pub-type:ipv4Address";
+							config "false";
+							description "";
+						}
+						leaf nbrState {
+							type "ospfv2commNbrState";
+							config "false";
+							description "";
+						}
+						leaf hostName {
+							type "string";
+							config "false";
+							description "Host Name";
+						}
+						container neighborDatas {
+							description "";
+							list neighborData {
+								config "false";
+								description "";
+								leaf interfaceIpAddr {
+									type "pub-type:ipv4Address";
+									config "false";
+									description "";
+								}
+								leaf nbrIpAddr {
+									type "pub-type:ipv4Address";
+									config "false";
+									description "";
+								}
+								leaf grState {
+									type "ospfv2commNbrDispGRState";
+									config "false";
+									description "GR state";
+								}
+								leaf nbrMode {
+									type "ospfv2commNbrMode";
+									config "false";
+									description "";
+								}
+								leaf nbrPriority {
+									type "int32";
+									config "false";
+									description "";
+								}
+								leaf nbrDR {
+									type "pub-type:ipv4Address";
+									config "false";
+									description "";
+								}
+								leaf nbrBDR {
+									type "pub-type:ipv4Address";
+									config "false";
+									description "";
+								}
+								leaf nbrInterfaceMTU {
+									type "uint32";
+									config "false";
+									description "nbrInterfaceMTU";
+								}
+								leaf deadDueTimer {
+									type "string";
+									config "false";
+									description "";
+								}
+								leaf nbrRetranIntv {
+									type "uint32";
+									config "false";
+									description "nbrInterfaceMTU";
+								}
+								leaf nbrUpTime {
+									type "string";
+									config "false";
+									description "";
+								}
+								leaf nbrAuthenticationSequence {
+									type "uint32";
+									config "false";
+									description "";
+								}
+							}
+						}
+					}
+				}
+				container domainIDs {
+					description "";
+					list domainID {
+						key "domainID secondaryFlag type value";
+						description "";
+						leaf domainID {
+							when "../../vrfName != '_public_' and ../../vrfName != null";
+							type "pub-type:ipv4Address";
+							description "";
+						}
+						leaf secondaryFlag {
+							type "boolean";
+							description "";
+						}
+						leaf type {
+							type "ospfv2commDomainIdType";
+							description "";
+						}
+						leaf value {
+							type "string";
+							description "";
+						}
+					}
+				}
+				container ospfHostNames {
+					description "";
+					container ospfHostName {
+						description "Enable HostName";
+						leaf hostNameEnable {
+							type "boolean";
+							default false;
+							description "Enable HostName";
+						}
+						leaf hostName {
+							when "(../hostNameEnable = 'true')";
+							type "string";
+							description "Host Name";
+						}
+					}
+				}
+				container abrAsbrStatistics {
+					description "";
+					list abrAsbrStatistic {
+						config "false";
+						description "";
+						leaf routerId {
+							type "pub-type:ipv4Address";
+							config "false";
+							description "";
+						}
+						leaf areaId {
+							type "pub-type:ipv4Address";
+							config "false";
+							description "";
+						}
+						leaf pathType {
+							type "ospfv2commPathType";
+							config "false";
+							description "";
+						}
+						leaf destinationId {
+							type "pub-type:ipv4Address";
+							config "false";
+							description "";
+						}
+						leaf cost {
+							type "uint32";
+							config "false";
+							description "";
+						}
+						leaf nexthopIpAddr {
+							type "pub-type:ipv4Address";
+							config "false";
+							description "";
+						}
+						leaf routerType {
+							type "ospfv2commRouterType";
+							config "false";
+							description "";
+						}
+						leaf ifName {
+							type "pub-type:ifName";
+							config "false";
+							description "Outgoing interface";
+						}
+					}
+				}
+				container nexthopInformations {
+					description "";
+					list nexthopInformation {
+						config "false";
+						description "";
+						leaf routerId {
+							type "pub-type:ipv4Address";
+							config "false";
+							description "";
+						}
+						leaf nexthopAddr {
+							type "pub-type:ipv4Address";
+							config "false";
+							description "";
+						}
+						leaf routingSourceType {
+							type "ospfv2commRouteSourceType";
+							config "false";
+							description "";
+						}
+						leaf interfaceAddr {
+							type "pub-type:ipv4Address";
+							config "false";
+							description "";
+						}
+						leaf refereceCount {
+							type "uint32";
+							config "false";
+							description "";
+						}
+						leaf ifName {
+							type "string";
+							config "false";
+							description "";
+						}
+					}
+				}
+				container trafficAdjStats {
+					description "";
+					list trafficAdjStat {
+						config "false";
+						description "";
+						leaf areaId {
+							type "pub-type:ipv4Address";
+							config "false";
+							description "";
+						}
+						leaf routerId {
+							type "pub-type:ipv4Address";
+							config "false";
+							description "";
+						}
+						leaf ipAddress {
+							type "pub-type:ipv4Address";
+							config "false";
+							description "";
+						}
+						leaf ifCost {
+							type "uint32";
+							config "false";
+							description "";
+						}
+						leaf ifName {
+							type "pub-type:ifName";
+							config "false";
+							description "";
+						}
+						leaf ifTeTnlDest {
+							type "pub-type:ipv4Address";
+							config "false";
+							description "destination of te tunnel";
+						}
+						leaf ifTeTnlType {
+							type "ospfv2commIfTnlType";
+							config "false";
+							description "shortcut or fa";
+						}
+						leaf ifTeTnlNbrId {
+							type "pub-type:ipv4Address";
+							config "false";
+							description "router-id of tunnel end";
+						}
+						leaf ifTeMetric {
+							type "int32";
+							config "false";
+							description "te tunnel metric";
+						}
+						leaf ifTeMetricType {
+							type "ospfv2commOspfMetricType";
+							config "false";
+							description "relative or absolute";
+						}
+						leaf holdTime {
+							type "uint32";
+							config "false";
+							description "hold time";
+						}
+					}
+				}
+				container lsdbStatistics {
+					description "";
+					list lsdbStatistic {
+						config "false";
+						description "";
+						leaf areaId {
+							type "pub-type:ipv4Address";
+							config "false";
+							description "";
+						}
+						leaf lsaType {
+							type "ospfv2commLsaType";
+							config "false";
+							description "";
+						}
+						leaf lsaAge {
+							type "int32";
+							config "false";
+							description "";
+						}
+						leaf linkStateId {
+							type "pub-type:ipv4Address";
+							config "false";
+							description "LSA lsid";
+						}
+						leaf advertiseRouterId {
+							type "pub-type:ipv4Address";
+							config "false";
+							description "";
+						}
+						leaf lsaSequenceNumber {
+							type "string";
+							config "false";
+							description "";
+						}
+						leaf checkSum {
+							type "string";
+							config "false";
+							description "";
+						}
+						leaf lsaLength {
+							type "uint32";
+							config "false";
+							description "";
+						}
+						leaf options {
+							type "ospfv2commLSDBOption";
+							config "false";
+							description "";
+						}
+						leaf optionFlag {
+							type "ospfv2commLSDBOptionFlag";
+							config "false";
+							description "";
+						}
+						leaf linkCount {
+							type "uint32";
+							config "false";
+							description "";
+						}
+						leaf networkMask {
+							type "pub-type:ipv4Address";
+							config "false";
+							description "";
+						}
+						leaf hostName {
+							type "string";
+							config "false";
+							description "Host Name";
+						}
+						container lsabodys {
+							description "";
+							list lsabody {
+								config "false";
+								description "LSA Data";
+								leaf linkId {
+									type "pub-type:ipv4Address";
+									config "false";
+									description "link id";
+								}
+								leaf linkData {
+									type "pub-type:ipv4Address";
+									config "false";
+									description "link data";
+								}
+								leaf linkType {
+									type "ospfv2commLSDBLinkType";
+									config "false";
+									description "link type";
+								}
+								leaf attachRouter {
+									type "pub-type:ipv4Address";
+									config "false";
+									description "";
+								}
+								leaf tosId {
+									type "uint8";
+									config "false";
+									description "tos id";
+								}
+								leaf tosMetric {
+									type "uint32";
+									config "false";
+									description "tos metric";
+								}
+								leaf forwardIpAddress {
+									type "pub-type:ipv4Address";
+									config "false";
+									description "forwarding ip address";
+								}
+								leaf routeTag {
+									type "uint32";
+									config "false";
+									description "";
+								}
+								leaf opaqueType {
+									type "uint32";
+									config "false";
+									description "";
+								}
+								leaf opaqueID {
+									type "uint32";
+									config "false";
+									description "opaque id";
+								}
+								leaf extMetricType {
+									type "uint8";
+									config "false";
+									description "";
+								}
+							}
+						}
+					}
+				}
+				container lsdbBriefs {
+					description "";
+					list lsdbBrief {
+						config "false";
+						description "";
+						leaf areaId {
+							type "pub-type:ipv4Address";
+							config "false";
+							description "";
+						}
+						leaf routerId {
+							type "pub-type:ipv4Address";
+							config "false";
+							description "";
+						}
+						leaf asscope {
+							type "uint32";
+							config "false";
+							description "";
+						}
+						leaf stub {
+							type "uint32";
+							config "false";
+							description "";
+						}
+						leaf router {
+							type "uint32";
+							config "false";
+							description "";
+						}
+						leaf network {
+							type "uint32";
+							config "false";
+							description "";
+						}
+						leaf summaryNet {
+							type "uint32";
+							config "false";
+							description "";
+						}
+						leaf asbr {
+							type "uint32";
+							config "false";
+							description "";
+						}
+						leaf type7 {
+							type "uint32";
+							config "false";
+							description "";
+						}
+						leaf opaque9 {
+							type "uint32";
+							config "false";
+							description "";
+						}
+						leaf opaque10 {
+							type "uint32";
+							config "false";
+							description "";
+						}
+						leaf opaque11 {
+							type "uint32";
+							config "false";
+							description "";
+						}
+						leaf ase {
+							type "uint32";
+							config "false";
+							description "";
+						}
+						leaf subTotal {
+							type "uint32";
+							config "false";
+							description "";
+						}
+					}
+				}
+				container asLsdbBriefs {
+					description "";
+					list asLsdbBrief {
+						config "false";
+						description "";
+						leaf routerId {
+							type "pub-type:ipv4Address";
+							config "false";
+							description "";
+						}
+						leaf opaque11 {
+							type "uint32";
+							config "false";
+							description "";
+						}
+						leaf ase {
+							type "uint32";
+							config "false";
+							description "";
+						}
+						leaf subTotal {
+							type "uint32";
+							config "false";
+							description "";
+						}
+					}
+				}
+				container routings {
+					description "";
+					list routing {
+						config "false";
+						description "OSPF routing table";
+						leaf destinationIpAddr {
+							type "pub-type:ipv4Address";
+							config "false";
+							description "Destination IP prefix";
+						}
+						leaf maskLength {
+							type "uint32";
+							config "false";
+							description "Destination mask length";
+						}
+						leaf cost {
+							type "uint32";
+							config "false";
+							description "Cost to reach destination";
+						}
+						leaf prefixPriority {
+							type "ospfv2commPrePriority";
+							config "false";
+							description "Prefix priority";
+						}
+						leaf pathType {
+							type "string";
+							config "false";
+							description "Destination Pathtype";
+						}
+						container nexthopDatas {
+							description "";
+							list nexthopData {
+								config "false";
+								description "OSPF route nexthop data";
+								leaf nexthopIpAddr {
+									type "pub-type:ipv4Address";
+									config "false";
+									description "Nexthop address of destination";
+								}
+								leaf flagsDisp {
+									type "string";
+									config "false";
+									description "Nexthop Flag";
+								}
+								leaf advertiseRouterId {
+									type "pub-type:ipv4Address";
+									config "false";
+									description "Advertising router of destination";
+								}
+								leaf areaId {
+									type "pub-type:ipv4Address";
+									config "false";
+									description "Area-Id of destination";
+								}
+								leaf tag {
+									type "uint32";
+									config "false";
+									description "external route tag";
+								}
+								leaf ifName {
+									type "pub-type:ifName";
+									config "false";
+									description "Outgoing interface name";
+								}
+								leaf bakIfName {
+									type "pub-type:ifName";
+									config "false";
+									description "Backup outgoing interface name";
+								}
+								leaf bakNextIpAddr {
+									type "pub-type:ipv4Address";
+									config "false";
+									description "Backup nexthop address";
+								}
+								leaf backupType {
+									type "ospfv2commBackupType";
+									config "false";
+									description "backuptype";
+								}
+								leaf tunnelDest {
+									type "pub-type:ipv4Address";
+									config "false";
+									description "tunnelDest";
+								}
+								leaf tunnelType {
+									type "ospfv2commTunnelType";
+									config "false";
+									description "tunnelType";
+								}
+							}
+						}
+					}
+				}
+				container migpRoutings {
+					description "";
+					list migpRouting {
+						when "(../../vrfName = '_public_' and ../../vrfName = null)";
+						config "false";
+						description "Migp routing table";
+						leaf destinationIpAddr {
+							type "pub-type:ipv4Address";
+							config "false";
+							description "Destination IP prefix";
+						}
+						leaf maskLength {
+							type "uint32";
+							config "false";
+							description "Destination mask length";
+						}
+						leaf cost {
+							type "uint32";
+							config "false";
+							description "Cost to reach destination";
+						}
+						leaf prefixPriority {
+							type "ospfv2commPrePriority";
+							config "false";
+							description "Prefix priority";
+						}
+						leaf pathType {
+							type "string";
+							config "false";
+							description "Destination Pathtype";
+						}
+						container migpnexthopDatas {
+							description "";
+							list migpnexthopData {
+								config "false";
+								description "OSPF route nexthop data";
+								leaf nexthopIpAddr {
+									type "pub-type:ipv4Address";
+									config "false";
+									description "Nexthop address of destination";
+								}
+								leaf flagsDisp {
+									type "string";
+									config "false";
+									description "Nexthop Flag";
+								}
+								leaf advertiseRouterId {
+									type "pub-type:ipv4Address";
+									config "false";
+									description "Advertising router of destination";
+								}
+								leaf areaId {
+									type "pub-type:ipv4Address";
+									config "false";
+									description "Area-Id of destination";
+								}
+								leaf tag {
+									type "uint32";
+									config "false";
+									description "external route tag";
+								}
+								leaf ifName {
+									type "pub-type:ifName";
+									config "false";
+									description "Outgoing interface name";
+								}
+							}
+						}
+					}
+				}
+				container lastDownNbrs {
+					description "";
+					list lastDownNbr {
+						config "false";
+						description "";
+						leaf listIndex {
+							type "uint32";
+							config "false";
+							description "";
+						}
+						leaf areaId {
+							type "pub-type:ipv4Address";
+							config "false";
+							description "";
+						}
+						leaf nbrIpAddr {
+							type "pub-type:ipv4Address";
+							config "false";
+							description "";
+						}
+						leaf nbrRouterId {
+							type "pub-type:ipv4Address";
+							config "false";
+							description "";
+						}
+						leaf ifName {
+							type "pub-type:ifName";
+							config "false";
+							description "";
+						}
+						leaf nbrDownImmediateReason {
+							type "ospfv2commNbrDownImmReason";
+							config "false";
+							description "";
+						}
+						leaf nbrDownPrimaryReason {
+							type "ospfv2commNbrDownPrimReason";
+							config "false";
+							description "";
+						}
+						leaf nbrDownTime {
+							type "yang:date-and-time";
+							config "false";
+							description "";
+						}
+						leaf routerId {
+							type "pub-type:ipv4Address";
+							config "false";
+							description "";
+						}
+					}
+				}
+				container bfdStatDatas {
+					description "";
+					list bfdStatData {
+						config "false";
+						description "graceful restart information";
+						leaf ifName {
+							type "pub-type:ifName";
+							config "false";
+							description "Outgoing interface";
+						}
+						leaf areaId {
+							type "pub-type:ipv4Address";
+							config "false";
+							description "Area Id";
+						}
+						leaf NbrRouterID {
+							type "pub-type:ipv4Address";
+							config "false";
+							description "Nbr Router Id";
+						}
+						leaf bfdState {
+							type "ospfv2BfdStatus";
+							config "false";
+							description "Bfd State";
+						}
+						leaf ospfInterfaceIpAddr {
+							type "pub-type:ipv4Address";
+							config "false";
+							description "Area Id";
+						}
+						leaf remoteIpAddr {
+							type "pub-type:ipv4Address";
+							config "false";
+							description "Nbr Router Id";
+						}
+						leaf rxInterval {
+							type "uint32";
+							config "false";
+							description "Rx Interval";
+						}
+						leaf txInterval {
+							type "uint32";
+							config "false";
+							description "Tx Interval";
+						}
+						leaf multiplier {
+							type "uint32";
+							config "false";
+							description "Detect Multiplier";
+						}
+						leaf bfdLocalDis {
+							type "uint32";
+							config "false";
+							description "Local Discriminator";
+						}
+						leaf diagnosticInfo {
+							type "ospfBfdDiagInfoType";
+							config "false";
+							description "Diagnostic Information";
+						}
+					}
+				}
+				container errorProcessDatas {
+					description "";
+					list errorProcessData {
+						config "false";
+						description "";
+						leaf rtrId {
+							type "pub-type:ipv4Address";
+							config "false";
+							description "Router Id";
+						}
+						leaf sameIpPktCnt {
+							type "uint32";
+							config "false";
+							description "IPv6: received my own packet";
+						}
+						leaf badPktCnt {
+							type "uint32";
+							config "false";
+							description "Bad packet";
+						}
+						leaf badVerCnt {
+							type "uint32";
+							config "false";
+							description "Bad version";
+						}
+						leaf badChkSumPktCnt {
+							type "uint32";
+							config "false";
+							description "Bad Checksum pkt count";
+						}
+						leaf badAreaPktCnt {
+							type "uint32";
+							config "false";
+							description "Bad area ID";
+						}
+						leaf pktRcvUnNumber {
+							type "uint32";
+							config "false";
+							description "Bad Receive unnumberd";
+						}
+						leaf badVirtLinkCnt {
+							type "uint32";
+							config "false";
+							description "Bad virtual link";
+						}
+						leaf authTypeFailCnt {
+							type "uint32";
+							config "false";
+							description "Bad authentication type";
+						}
+						leaf authKeyFailCnt {
+							type "uint32";
+							config "false";
+							description "Bad authentication key";
+						}
+						leaf shortPktCnt {
+							type "uint32";
+							config "false";
+							description "Packet too small";
+						}
+						leaf longPktCnt {
+							type "uint32";
+							config "false";
+							description "Packet larger than ip num";
+						}
+						leaf txErrCnt {
+							type "uint32";
+							config "false";
+							description "Transmit error";
+						}
+						leaf ifDownCnt {
+							type "uint32";
+							config "false";
+							description "Interface down";
+						}
+						leaf noNbr {
+							type "uint32";
+							config "false";
+							description "Unknown neighbor";
+						}
+						leaf misNetmaskCnt {
+							type "uint32";
+							config "false";
+							description "mis net mask count";
+						}
+						leaf misHelloIntlCnt {
+							type "uint32";
+							config "false";
+							description "Hello timer mismatch";
+						}
+						leaf misDeadIntlCnt {
+							type "uint32";
+							config "false";
+							description "Dead timer mismatch";
+						}
+						leaf misExtRouCapCnt {
+							type "uint32";
+							config "false";
+							description "Extern option mismatch";
+						}
+						leaf routerIdConfusion {
+							type "uint32";
+							config "false";
+							description "Router Id Confusion";
+						}
+						leaf vlinkNbrMisCnt {
+							type "uint32";
+							config "false";
+							description "Virtual neighbor unknown";
+						}
+						leaf nbmaNbrErrCnt {
+							type "uint32";
+							config "false";
+							description "NBMA neighbor unknown";
+						}
+						leaf invalSrcHeloCnt {
+							type "uint32";
+							config "false";
+							description "Virtual neighbor unknown";
+						}
+						leaf ddNbrLowCnt {
+							type "uint32";
+							config "false";
+							description "Neighbour state low";
+						}
+						leaf ddRtrIdCnt {
+							type "uint32";
+							config "false";
+							description "Router id confusion";
+						}
+						leaf ddOptMsMatchCnt {
+							type "uint32";
+							config "false";
+							description "Extern option mismatch";
+						}
+						leaf ddUnknwnLsaCnt {
+							type "uint32";
+							config "false";
+							description "Unknown LSA type";
+						}
+						leaf ddMtuMsMatchCnt {
+							type "uint32";
+							config "false";
+							description "MTU option mismatch";
+						}
+						leaf ackNbrLowCnt {
+							type "uint32";
+							config "false";
+							description "Neighbour state low";
+						}
+						leaf ackBadCnt {
+							type "uint32";
+							config "false";
+							description "Bad ack";
+						}
+						leaf ackDuplicateCnt {
+							type "uint32";
+							config "false";
+							description "Duplicate ack";
+						}
+						leaf ackUnknwnLsaCnt {
+							type "uint32";
+							config "false";
+							description "Unknown LSA type";
+						}
+						leaf reqNbrLowCnt {
+							type "uint32";
+							config "false";
+							description "Neighbour state low";
+						}
+						leaf reqEmptyCnt {
+							type "uint32";
+							config "false";
+							description "Empty request";
+						}
+						leaf reqBadCnt {
+							type "uint32";
+							config "false";
+							description "Bad request";
+						}
+						leaf updNbrLowCnt {
+							type "uint32";
+							config "false";
+							description "Neighbor state low";
+						}
+						leaf updSelfNewrCnt {
+							type "uint32";
+							config "false";
+							description "Newer self-generate LSA";
+						}
+						leaf updMinLSArrCnt {
+							type "uint32";
+							config "false";
+							description "Received LSA within LSA Arrival interval";
+						}
+						leaf updLsChkSumCnt {
+							type "uint32";
+							config "false";
+							description "LSA checksum bad";
+						}
+						leaf updLesRecentCnt {
+							type "uint32";
+							config "false";
+							description "Received less recent LSA";
+						}
+						leaf updUnknwLsaCnt {
+							type "uint32";
+							config "false";
+							description "Unknown LSA type";
+						}
+						leaf opq9floodCnt {
+							type "uint32";
+							config "false";
+							description "Opec 9 flood count";
+						}
+						leaf opq10floodCnt {
+							type "uint32";
+							config "false";
+							description "Opec 10 flood count";
+						}
+						leaf opq11floodCnt {
+							type "uint32";
+							config "false";
+							description "Opec 11 flood count";
+						}
+						leaf unknownTLV {
+							type "uint32";
+							config "false";
+							description "Unknown TLV type";
+						}
+						leaf rxmtDDErrCnt {
+							type "uint32";
+							config "false";
+							description "Number for DD Packet";
+						}
+						leaf rxmtReqErrCnt {
+							type "uint32";
+							config "false";
+							description "Number for Request Packet";
+						}
+						leaf rxmtUpdErrCnt {
+							type "uint32";
+							config "false";
+							description "Number for Update Packet";
+						}
+						leaf grInvalidLsaCnt {
+							type "uint32";
+							config "false";
+							description "Number of invalid LSAs";
+						}
+						leaf grInvalidPolCnt {
+							type "uint32";
+							config "false";
+							description "Number of policy failed LSAs";
+						}
+						leaf grInvalidPrdCnt {
+							type "uint32";
+							config "false";
+							description "Number of wrong period LSAs";
+						}
+						leaf tunnelCostCnt {
+							type "uint32";
+							config "false";
+							description "Tunnel cost mistake";
+						}
+						leaf peerNetTypeCnt {
+							type "uint32";
+							config "false";
+							description "Neighbouring interface";
+						}
+					}
+				}
+				container dynamicHostNames {
+					description "";
+					list dynamicHostName {
+						config "false";
+						description "Dynamic Host NameTable";
+						leaf scope {
+							type "string";
+							config "false";
+							description "Scope of the HostName";
+						}
+						leaf areaId {
+							type "pub-type:ipv4Address";
+							config "false";
+							description "Area Id of the Host";
+						}
+						leaf routerId {
+							type "pub-type:ipv4Address";
+							config "false";
+							description "Router ID mapping to HostName";
+						}
+						leaf hostName {
+							type "string";
+							config "false";
+							description "Host Name";
+						}
+					}
+				}
+				container gracefulRestartInformations {
+					description "";
+					list gracefulRestartInformation {
+						config "false";
+						description "graceful restart information";
+						leaf grCapability {
+							type "ospfv2HelperCapabality";
+							config "false";
+							description "Graceful-restart capability";
+						}
+						leaf helpRole {
+							type "ospfv2HelperSupport";
+							config "false";
+							description "Help Role";
+						}
+						leaf currentGRState {
+							type "ospfv2commGRState";
+							config "false";
+							description "";
+						}
+						leaf onHelper {
+							type "ospfv2OnHelper";
+							config "false";
+							description "Last Exit Reason";
+						}
+						leaf reStartNbrNum {
+							type "uint32";
+							config "false";
+							description "restart nbr count";
+						}
+						container grNeighborInfos {
+							description "";
+							list grNeighborInfo {
+								config "false";
+								description "graceful restart information";
+								leaf areaId {
+									type "pub-type:ipv4Address";
+									config "false";
+									description "Area Id";
+								}
+								leaf intfIPAddr {
+									type "pub-type:ipv4Address";
+									config "false";
+									description "interface IP Address";
+								}
+								leaf ifName {
+									type "pub-type:ifName";
+									config "false";
+									description "Interface name";
+								}
+								leaf nbrRouterId {
+									type "pub-type:ipv4Address";
+									config "false";
+									description "Nbr Router Id";
+								}
+								leaf nbrIPAddr {
+									type "pub-type:ipv4Address";
+									config "false";
+									description "Nbr IP Address";
+								}
+								leaf grNbrState {
+									type "ospfv2GRNbrState";
+									config "false";
+									description "Nbr GR State";
+								}
+								leaf grHelperPeriod {
+									type "uint32";
+									config "false";
+									description "Helper period";
+								}
+								leaf grHelperAge {
+									type "uint32";
+									config "false";
+									description "Helper Age";
+								}
+								leaf lastExitReason {
+									type "ospfv2commGRLastExitReason";
+									config "false";
+									description "Nbr Last Exit Reason";
+								}
+							}
+						}
+						container grVlinkNeighborInfos {
+							description "";
+							list grVlinkNeighborInfo {
+								config "false";
+								description "graceful restart information";
+								leaf areaId {
+									type "pub-type:ipv4Address";
+									config "false";
+									description "Area Id";
+								}
+								leaf intfIPAddr {
+									type "pub-type:ipv4Address";
+									config "false";
+									description "interface IP Address";
+								}
+								leaf ifName {
+									type "pub-type:ifName";
+									config "false";
+									description "Interface name";
+								}
+								leaf nbrRouterId {
+									type "pub-type:ipv4Address";
+									config "false";
+									description "Nbr Router Id";
+								}
+								leaf nbrIPAddr {
+									type "pub-type:ipv4Address";
+									config "false";
+									description "Nbr IP Address";
+								}
+								leaf grNbrState {
+									type "ospfv2GRNbrState";
+									config "false";
+									description "Nbr GR State";
+								}
+								leaf vlinkIfState {
+									type "ospfv2commIntfState";
+									config "false";
+									description "Helper period";
+								}
+								leaf vlinkNbrState {
+									type "ospfv2commNbrState";
+									config "false";
+									description "Helper Age";
+								}
+								leaf lastExitReason {
+									type "ospfv2commGRLastExitReason";
+									config "false";
+									description "Nbr Last Exit Reason";
+								}
+							}
+						}
+					}
+				}
+				container ospfMplsTeStatistics {
+					description "";
+					list ospfMplsTeStatistic {
+						config "false";
+						description "OSPF MPLS TE Statistics";
+						leaf areaId {
+							type "pub-type:ipv4Address";
+							config "false";
+							description "Area Id";
+						}
+						leaf opaqueId {
+							type "uint32";
+							config "false";
+							description "Opaque Id";
+						}
+						leaf advRtrId {
+							type "pub-type:ipv4Address";
+							config "false";
+							description "Advertising Router Id";
+						}
+						leaf linkStateId {
+							type "pub-type:ipv4Address";
+							config "false";
+							description "LSID";
+						}
+						leaf lsaLength {
+							type "uint32";
+							config "false";
+							description "Lsa Length";
+						}
+						leaf lsaoptions {
+							type "ospfv2commLSDBOption";
+							config "false";
+							description "LSA Options";
+						}
+						container routerTlvDatas {
+							description "";
+							list routerTlvData {
+								config "false";
+								description "Router TLV Data";
+								leaf teRouterId {
+									type "pub-type:ipv4Address";
+									config "false";
+									description "mpls te router id";
+								}
+							}
+						}
+						container linkTlvDatas {
+							description "";
+							list linkTlvData {
+								config "false";
+								description "Link TLV Data";
+								leaf linkType {
+									type "oteLinkType";
+									config "false";
+									description "Link Type";
+								}
+								leaf linkId {
+									type "pub-type:ipv4Address";
+									config "false";
+									description "Link Id";
+								}
+								leaf remoteIp {
+									type "pub-type:ipv4Address";
+									config "false";
+									description "Remote Ip Address";
+								}
+								leaf teMetric {
+									type "uint32";
+									config "false";
+									description "Te Metric";
+								}
+								leaf maxLinkBw {
+									type "uint64";
+									config "false";
+									description "Maximum Link Bandwidth";
+								}
+								leaf maxResBw {
+									type "uint64";
+									config "false";
+									description "Maximum Reserved Bandwidth";
+								}
+								leaf adminGroup {
+									type "string";
+									default 0x0;
+									config "false";
+									description "Admin Group";
+								}
+								leaf unResBw0 {
+									type "uint64";
+									config "false";
+									description "Unreserved Bandwidth0";
+								}
+								leaf unResBw1 {
+									type "uint64";
+									config "false";
+									description "Unreserved Bandwidth1";
+								}
+								leaf unResBw2 {
+									type "uint64";
+									config "false";
+									description "Unreserved Bandwidth2";
+								}
+								leaf unResBw3 {
+									type "uint64";
+									config "false";
+									description "Unreserved Bandwidth3";
+								}
+								leaf unResBw4 {
+									type "uint64";
+									config "false";
+									description "Unreserved Bandwidth4";
+								}
+								leaf unResBw5 {
+									type "uint64";
+									config "false";
+									description "Unreserved Bandwidth5";
+								}
+								leaf unResBw6 {
+									type "uint64";
+									config "false";
+									description "Unreserved Bandwidth6";
+								}
+								leaf unResBw7 {
+									type "uint64";
+									config "false";
+									description "Unreserved Bandwidth7";
+								}
+								container localIps {
+									description "";
+									list localIp {
+										config "false";
+										description "Local Ip Address";
+										leaf localIp {
+											type "pub-type:ipv4Address";
+											config "false";
+											description "Local Ip Address";
+										}
+									}
+								}
+								container srlgs {
+									description "";
+									list srlg {
+										config "false";
+										description "SRLG";
+										leaf srlg {
+											type "uint32";
+											config "false";
+											description "SRLG";
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+				container ospfProcDcns {
+					description "";
+					list ospfProcDcn {
+						key "intfType";
+						description "";
+						leaf intfType {
+							type "ospfv2commDCNIntfType";
+							description "";
+						}
+						leaf helloInterval {
+							type "int32";
+							description "";
+						}
+						leaf deadInterval {
+							type "int32";
+							description "";
+						}
+						leaf retransmitInterval {
+							type "int32";
+							description "";
+						}
+						leaf transDelayInterval {
+							type "uint32";
+							description "";
+						}
+						leaf drPriorityFlag {
+							type "boolean";
+							description "DR priority Flag";
+						}
+						leaf drPriority {
+							when "(../drPriorityFlag = 'true')";
+							type "uint8";
+							description "DR priority";
+						}
+						leaf authenticationMode {
+							type "ospfv2commProcDcnAuthenMode";
+							default none;
+							description "";
+						}
+						leaf keyId {
+							type "uint32";
+							description "";
+						}
+						leaf authTextSimple {
+							type "pub-type:passwordOSPF";
+							description "";
+						}
+						leaf authTextMd5 {
+							type "pub-type:passwordExtend";
+							description "";
+						}
+					}
+				}
+				container ospfMeshGroups {
+					description "";
+					list ospfMeshGroup {
+						config "false";
+						description "";
+						leaf areaId {
+							type "pub-type:ipv4Address";
+							config "false";
+							description "";
+						}
+						leaf meshGroupId {
+							type "pub-type:ipv4Address";
+							config "false";
+							description "mesh-group ID";
+						}
+						leaf memberCount {
+							type "uint32";
+							config "false";
+							description "Mesh Member Count";
+						}
+						container ospfMeshMembers {
+							description "";
+							list ospfMeshMember {
+								config "false";
+								description "";
+								leaf ifName {
+									type "pub-type:ifName";
+									config "false";
+									description "interface in mesh-group";
+								}
+								leaf interfaceIpAddr {
+									type "pub-type:ipv4Address";
+									config "false";
+									description "interface ip address";
+								}
+								leaf maskLength {
+									type "int32";
+									config "false";
+									description "mask length";
+								}
+								leaf nbrState {
+									type "ospfv2commNbrState";
+									config "false";
+									description "Nbr State";
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		container ospfGtsms {
+			description "";
+			list ospfGtsm {
+				key "vrfName";
+				description "";
+				leaf hops {
+					type "uint8";
+					mandatory "true";
+					description "";
+				}
+				leaf vrfName {
+					type "string";
+					description "";
+				}
+				leaf isNonstdMcast {
+					type "boolean";
+					description "gtsm nonstandard multicast flag";
+				}
+			}
+		}
+
+		container ospfPassivePeers {
+			description "";
+			list ospfPassivePeer {
+				key "ifName peerRtrId peerIfIpAddr peerId";
+				description "";
+				leaf ifName {
+					//type leafref {
+					//	path "/inv:inventory-oper/inv:nes/inv:ne/ifm:ifm-oper/ifm:interfaces/ifm:interface/ifm:ifName";
+					//}
+					type "string";
+					description "Self Interface name";
+				}
+				leaf peerRtrId {
+					type "pub-type:ipv4Address";
+					description "Passive peer router Id";
+				}
+				leaf peerIfIpAddr {
+					type "pub-type:ipv4Address";
+					description "Peer Interface IP Address";
+				}
+				leaf peerId {
+					type "uint32";
+					description "peerId";
+				}
+			}
+		}
+	}*/
+}

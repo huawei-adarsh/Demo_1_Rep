@@ -1,0 +1,977 @@
+/*
+WARNING:
+This yang model is just for fuction ONOS opensource project demo purpose only,
+And is subject to change in future, Huawei does not commit provide compatibilty
+in commercial product.
+*/
+/******************************************************
+ * Copyright (C) 2015-2016 Huawei Technologies Co., Ltd. All rights reserved.
+ * Module description & tree structure
+ ***************************************************/
+module huawei-ac-ne-ne-ifm {
+    namespace "urn:huawei:yang:huawei-ac-ne-ne-ifm";
+    prefix "ifm";
+    import huawei-ac-ne-pub-type {
+        prefix "pub-type";
+    }
+    import huawei-ac-nes{
+        prefix "nes";
+		revision-date "2016-03-04";
+    }
+	import huawei-ac-extension { 
+		prefix huawei-ext; 
+	}
+    import yang-ext {
+        prefix ext;
+    }
+    import huawei-ac-sync-ext{
+        prefix huawei-sync-ext;
+    }
+	
+    include huawei-ac-ne-ne-ifm-type;
+    include huawei-ac-ne-ne-ifm-pppbase;
+    include huawei-ac-ne-ne-ifm-hdlc;
+    include huawei-ac-ne-ne-ifm-fr;
+    include huawei-ac-ne-ne-ifm-flowalarm;
+    include huawei-ac-ne-ne-ifm-fr-type;
+    include huawei-ac-ne-ne-ifm-pppbase-type;
+    
+    organization "Huawei Technologies Co., Ltd.";
+	contact  
+	"Huawei Industrial Base
+     Bantian, Longgang
+     Shenzhen 518129
+     People's Republic of China
+     Website: http://www.huawei.com
+     Email: support@huawei.com";
+    revision "2016-03-23" {
+	    description "Initial Version";
+    }
+    
+    augment "/nes:devices/nes:device/nes:inventory-cfg/nes:nes/nes:ne" {
+        //ext:augment-identifier ifm-augment;
+    container ifm {
+        container interfaces {
+            description "List of interfaces.";
+            list interface {
+                key "ifName";
+                description "Name of a VPN instance. It uniquely identifies a VPN instance.";
+                    uses "huawei-sync-ext:sync-data-src-type";
+                leaf ifName {
+                        ////huawei-ext:e2e-lock "true";
+                    type pub-type:ifName;
+                    description "Name of an interface. For example, ethernet0/1/0. ";
+                }
+                leaf ifClass {
+                    type ifmcommIfClassType;
+                    default "mainInterface";
+                    description "Identify a main interface or a sub-interface.";
+                }
+                leaf ifPhyType {
+                    type ifmcommPhyType;
+                    description "";
+                }
+                leaf ifParentIfName {
+                    type pub-type:ifName;
+                    description "Name of the main interface. For example, ethernet0/1/0.";
+                }
+                leaf ifDescr {
+                        ////huawei-ext:e2e-lock "true";
+                    type string {
+                        length "0..242";
+                    }
+                    description "Description of an interface.";
+                }
+                leaf ifTrunkIfName {
+                        ////huawei-ext:e2e-lock "true";
+                    type pub-type:ifName;
+                    description "Name of a trunk interface. For example, eth-trunk0/1/0.";
+                }
+                leaf isL2SwitchPort {
+                    type boolean;
+                    default "false";
+                    description "To identify an L2 Switch Port.";
+                }
+                leaf ifAdminStatus {
+                        ////huawei-ext:e2e-lock "true";
+                    type ifmcommAdminStaType;
+                    default "up";
+                    description "Administrative status of an interface.";
+                }
+                leaf ifLinkProtocol {
+                    type ifmcommLinkProtocol;
+                    description "Link protocol.";
+                }
+                leaf ifEncapType {
+                    type ifmcommEncapType;
+                    default "ietf";
+                    description "Encapsulation type.";
+                }
+                leaf ifRouterType {
+                    type ifmcommRouterType;
+                    description "Route attribute of an interface. The available options are P2P, P2MP, NBMA, and Broadcast.";
+                }
+                leaf ifDf {
+                    type boolean;
+                    default "false";
+                    description "Clear the Don't Fragment field of IP packets on an interface.";
+                }
+                leaf ifTrapEnable {
+                    type boolean;
+                    default "true";
+                    description "Enable the trap function on an interface.";
+                }
+                leaf ifStatiEnable {
+                        ////huawei-ext:e2e-lock "true";
+                    type boolean;
+                    default "false";
+                    description "Enable the statistics function on an interface.";
+                }
+                leaf statMode {
+                        ////huawei-ext:e2e-lock "true";
+                    type ifmcommStatMode;
+                    description "Mode of statistics collection.";
+                }
+                leaf ifMtu {
+                        ////huawei-ext:e2e-lock "true";
+                    type uint32 {
+                        range "0..50000";
+                    }
+                    default "1500";
+                    description "Maximum transmission unit of an interface.";
+                }
+                leaf ifBandwidth {
+                    type uint32 {
+                        range "1..1000000";
+                    }
+                    description "Specify MIB-referenced bandwidth of an interface. ";
+                }
+                leaf ifMac {
+                    type pub-type:macAddress;
+                    description "MAC address of an interface, in the format of HH-HH-HH.";
+                }
+                leaf ifStatItvl {
+                    type uint32 {
+                        range "10..600";
+                    }
+                    description "Interval at which flow statistics are collected on an interface. The value must be a multiple of 10.";
+                }
+                leaf ifServiceType {
+                    type ifmcommServiceType;
+                    description "Type of a member interface.";
+                }
+                leaf l2SubIfFlag {
+                    type boolean;
+                    default "false";
+                    description "Identify an L2 Sub-interface.";
+                }
+                leaf protocolUpDelayTime {
+                    type uint32 {
+                        range "0..7200";
+                    }
+                    default "0";
+                    description "Specify the up-delay-time value, in seconds,  the default value is 0.";
+                }
+                leaf ifMainIfDescr {
+                    type string {
+                            length "0..242";
+                    }
+                    description "Interface name.";
+                }
+                container ifmAm4 {
+                    description "IPv4 configurations, including the address setting, address negotiation, and IP unnumbered functions.";
+                    leaf addrCfgType {
+                        type ifmam4CfgType;
+                        default "config";
+                        description "IPv4 address configuration type.";
+                    }
+                    container am4CfgAddrs {
+                        description "List of IPv4 addresses.";
+                        list am4CfgAddr {
+                            key "ifIpAddr";
+                            description "IPv4 address configurations.";
+                            leaf ifIpAddr {
+                                    ////huawei-ext:e2e-lock "true";
+                                type pub-type:ipv4Address;
+                                description "IPv4 address.";
+                            }
+                            leaf subnetMask {
+                                    ////huawei-ext:e2e-lock "true";
+                                type pub-type:ipv4Mask;
+                                description "IPv4 address mask.";
+                            }
+                            leaf addrType {
+                                    ////huawei-ext:e2e-lock "true";
+                                type ifmam4IpAddrType;
+                                description "IPv4 address type.";
+                            }
+                        }
+                    }
+                    leaf unNumIfName {
+                        type pub-type:ifName;
+			////huawei-ext:e2e-lock "true";
+                        description "Name of an unnumbered interface. For example, ethernet0/1/0.";
+                    }
+                }
+                container mainIpAddr {
+                    description "Configure the main IP address.";
+                    leaf ipAddrCfgType {
+                        type ifmam4IpAddrCreateOrDelete;
+                        default "Config";
+                        description "IP address configuration mode.";
+                    }
+                    leaf ifIpAddr {
+                        type pub-type:ipv4Address;
+                        description "IP address.";
+                    }
+                    leaf subnetMask {
+                        type pub-type:ipv4Mask;
+                        description "IP address mask.";
+                    }
+                }
+
+			}
+			
+		}
+	}
+	}
+	
+    augment "/nes:devices/nes:device/nes:inventory-oper/nes:nes/nes:ne" {
+        //ext:augment-identifier ifm-augment-oper;
+    container ifm {
+        container globalConfig {
+            description "Globally configured attributes.";
+            leaf globalStatItvl {
+                type uint32 {
+                    range "10..600";
+                }
+                config false;
+                default "300";
+                description "Set the interval at which global flow statistics are collected. The value must be a multiple of 10.";
+            }
+            leaf sysAttriControlMtu {
+                type ifmcommControlMtu;
+                config false;
+                default "1450";
+                description "Protocol MTU.";
+            }
+        }
+        container autoRecoveryTimes {
+            description "List of automatic recovery time configuration.";
+            list autoRecoveryTime {
+                key "errorDownType";
+                config false;
+                description "Automatic recovery time configuration.";
+                leaf errorDownType {
+                    type ifmcommErrorDownType;
+                    description "Cause of the error-down event.";
+                }
+                leaf timeValue {
+                    type uint32 {
+                        range "30..86400";
+                    }
+                    mandatory true;
+                    description "Delay for the status transition from Down to Up. The value is expressed in seconds.";
+                }
+            }
+        }
+        container interfaces {
+            description "List of interfaces.";
+            list interface {
+                key "ifName";
+                config false;
+                description "Name of a VPN instance. It uniquely identifies a VPN instance.";
+                leaf ifName {
+                    type pub-type:ifName;
+                    description "Name of an interface. For example, ethernet0/1/0. ";
+                }
+                leaf ifIndex {
+                    type uint32;
+                    description "Index of an interface.";
+                }
+                leaf ifClass {
+                    type ifmcommIfClassType;
+                    default "mainInterface";
+                    description "Identify a main interface or a sub-interface.";
+                }
+                leaf ifPhyType {
+                    type ifmcommPhyType;
+                    mandatory true;
+                    description "";
+                }
+                leaf ifPosition {
+                    type string {
+                        length "1..256";
+                    }
+                    config false;
+                    description "Position of an interface. For example, 0/1/0. ";
+                }
+                leaf ifParentIfName {
+                    type pub-type:ifName;
+                    mandatory true;
+                    description "Name of the main interface. For example, ethernet0/1/0.";
+                }
+                leaf ifNumber {
+                    type string {
+                        length "1..63";
+                        pattern '(^\d+\/\d+\/\d+\/\d+$)|(^\d+\/\d+\/\d+$)|(^\d+\/\d+$)|(^\d+$)|(^\d+\/\d+\/\d+[:]\d+$)|(^\d+\/\d+\/\d+[:]\d+[:]\d+[:]\d+$)|(^\d+\/\d+\/\d+\/\d+[:]\d+$)|(^\d+\/\d+\/\d+\/\d+[:]\d+[:]\d+[:]\d+$)|(^\d+\/\d+\/\d+\/\d+\/\d+[:]\d+$)|(^\d+\/\d+[:]\d+$)';
+                    }
+                    mandatory true;
+                    description "Number of an interface. For example, 0/1/0, or 2:1.";
+                }
+                leaf ifDescr {
+                    type string {
+                        length "1..242";
+                    }
+                    description "Description of an interface.";
+                }
+                leaf ifTrunkIfName {
+                    type pub-type:ifName;
+                    description "Name of a trunk interface. For example, eth-trunk0/1/0.";
+                }
+                leaf isL2SwitchPort {
+                    type boolean;
+                    default "false";
+                    description "To identify an L2 Switch Port.";
+                }
+                leaf ifAdminStatus {
+                    type ifmcommAdminStaType;
+                    default "up";
+                    description "Administrative status of an interface.";
+                }
+                leaf ifNetworkLayerStatus {
+                    type ifmcommNetWorkLayerState;
+                    default "ipv4andipv6up";
+                    description "";
+                }
+                leaf ifLinkProtocol {
+                    type ifmcommLinkProtocol;
+                    description "Link protocol.";
+                }
+                leaf ifEncapType {
+                    type ifmcommEncapType;
+                    default "ietf";
+                    description "Encapsulation type.";
+                }
+                leaf ifRouterType {
+                    type ifmcommRouterType;
+                    description "Route attribute of an interface. The available options are P2P, P2MP, NBMA, and Broadcast.";
+                }
+                leaf ifDf {
+                    type boolean;
+                    default "false";
+                    description "Clear the Don't Fragment field of IP packets on an interface.";
+                }
+                leaf ifTrapEnable {
+                    type boolean;
+                    default "true";
+                    description "Enable the trap function on an interface.";
+                }
+                leaf ifStatiEnable {
+                    type boolean;
+                    default "false";
+                    description "Enable the statistics function on an interface.";
+                }
+                leaf statMode {
+                    type ifmcommStatMode;
+                    description "Mode of statistics collection.";
+                }
+                leaf ifMtu {
+                    type uint32 {
+                        range "0..50000";
+                    }
+                    default "1500";
+                    description "Maximum transmission unit of an interface.";
+                }
+                leaf ifBandwidth {
+                    type uint32 {
+                        range "1..1000000";
+                    }
+                    description "Specify MIB-referenced bandwidth of an interface. ";
+                }
+                leaf ifMac {
+                    type pub-type:macAddress;
+                    description "MAC address of an interface, in the format of HH-HH-HH.";
+                }
+                leaf ifStatItvl {
+                    type uint32 {
+                        range "10..600";
+                    }
+                    description "Interval at which flow statistics are collected on an interface. The value must be a multiple of 10.";
+                }
+                leaf vsName {
+                    type string {
+                        length "1..50";
+                    }
+                    description "Name of a VS to which an interface belongs.";
+                }
+                leaf ifServiceType {
+                    type ifmcommServiceType;
+                    description "Type of a member interface.";
+                }
+                leaf isActorBearSrv {
+                    type boolean;
+                    description "Whether the local interface runs services.";
+                }
+                leaf l2SubIfFlag {
+                    type boolean;
+                    default "false";
+                    description "Identify an L2 Sub-interface.";
+                }
+                leaf protocolUpDelayTime {
+                    type uint32 {
+                        range "0..60";
+                    }
+                    default "0";
+                    description "Specify the up-delay-time value, in seconds,  the default value is 0.";
+                }
+                leaf ifMainIfDescr {
+                    type string {
+                        length "1..242";
+                    }
+                    description "Interface name.";
+                }
+                leaf portMode {
+                    type ifmcommPortMode;
+                    description "Interface port mode";
+                }
+                container ifmAm4 {
+                    description "IPv4 configurations, including the address setting, address negotiation, and IP unnumbered functions.";
+                    leaf addrCfgType {
+                        type ifmam4CfgType;
+                        default "config";
+                        description "IPv4 address configuration type.";
+                    }
+                    container am4CfgAddrs {
+                        description "List of IPv4 addresses.";
+                        list am4CfgAddr {
+                            key "ifIpAddr";
+                            description "IPv4 address configurations.";
+                            leaf ifIpAddr {
+                                type pub-type:ipv4Address;
+                                description "IPv4 address.";
+                            }
+                            leaf subnetMask {
+                                type pub-type:ipv4Mask;
+                                mandatory true;
+                                description "IPv4 address mask.";
+                            }
+                            leaf addrType {
+                                type ifmam4IpAddrType;
+                                mandatory true;
+                                description "IPv4 address type.";
+                            }
+                        }
+                    }
+                    leaf unNumIfName {
+                        type pub-type:ifName;
+                        description "Name of an unnumbered interface. For example, ethernet0/1/0.";
+                    }
+                }
+                container mainIpAddr {
+                    description "Configure the main IP address.";
+                    leaf ipAddrCfgType {
+                        type ifmam4IpAddrCreateOrDelete;
+                        default "Config";
+                        description "IP address configuration mode.";
+                    }
+                    leaf ifIpAddr {
+                        type pub-type:ipv4Address;
+                        mandatory true;
+                        description "IP address.";
+                    }
+                    leaf subnetMask {
+                        type pub-type:ipv4Mask;
+                        mandatory true;
+                        description "IP address mask.";
+                    }
+                }
+                container ifmAm6 {
+                    description "IPv6 configurations.";
+                    leaf enableFlag {
+                        type boolean;
+                        default "false";
+                        description "It is used to control whether an interface is enabled with the IPv6 function.";
+                    }
+                    leaf ifMtu6 {
+                        type uint32 {
+                            range "0..50000";
+                        }
+                        default "1500";
+                        description "IPv6 maximum transmission unit of an interface.";
+                    }
+                    leaf autoLinkLocal {
+                        type boolean;
+                        default "false";
+                        description "It is used to control whether an interface is enabled with the auto linklocal address function.";
+                    }
+                    container am6CfgAddrs {
+                        description "List of IPv6 addresses.";
+                        list am6CfgAddr {
+                            key "ifIp6Addr";
+                            description "IPv6 address configurations.";
+                            leaf ifIp6Addr {
+                                type pub-type:ipv6Address;
+                                description "IPv6 address.";
+                            }
+                            leaf addrPrefixLen {
+                                type uint32;
+                                mandatory true;
+                                description "Length of the IPv6 address prefix.";
+                            }
+                            leaf addrType6 {
+                                type ifmam6IpAddr6Type;
+                                mandatory true;
+                                description "IPv6 address type.";
+                            }
+                            leaf ifIDGenType {
+                                type ifmam6IDGenType;
+                                default "none";
+                                description "Address algorithm.";
+                            }
+                            leaf collisionCount {
+                                type uint32;
+                                config false;
+                                description "Number of IPv6 address collisions.";
+                            }
+                        }
+                    }
+                    container am6CgaInfos {
+                        description "CGA address container.";
+                        list am6CgaInfo {
+                            key "rsaKeyLabel";
+                            description "CGA address instance.";
+                            leaf rsaKeyLabel {
+                                type string {
+                                    length "1..35";
+                                }
+                                description "RSA key.";
+                            }
+                            leaf secLevel {
+                                type uint32 {
+                                    range "0..1";
+                                }
+                                default "0";
+                                description "Security level.";
+                            }
+                            leaf modifier {
+                                type pub-type:ipv6Address;
+                                description "CGA address modifier.";
+                            }
+                        }
+                    }
+                }
+                container ifControlFlap {
+                    description "Interface status suppression.";
+                    leaf ifCtrlFlapEnbl {
+                        type boolean;
+                        default "false";
+                        description "Enable the control flap function on an interface.";
+                    }
+                    leaf ifSuppress {
+                        type uint32 {
+                            range "1..20000";
+                        }
+                        default "2000";
+                        description "Suppression threshold on an interface. The value must be greater than the reusing threshold and smaller than the suppression upper limit.";
+                    }
+                    leaf ifReuse {
+                        type uint32 {
+                            range "1..20000";
+                        }
+                        default "750";
+                        description "Reusing threshold of an interface. The value must be smaller than the suppression threshold.";
+                    }
+                    leaf ifCeiling {
+                        type uint32 {
+                            range "1001..20000";
+                        }
+                        default "6000";
+                        description "Maximum suppression value on an interface. The value should be greater than the Damping Suppression Threshold.";
+                    }
+                    leaf ifDecayOk {
+                        type uint32 {
+                            range "1..900";
+                        }
+                        default "54";
+                        description "The penalty value of an Up interface attenuates to 1/2. The value is expressed in seconds.";
+                    }
+                    leaf ifDecayNg {
+                        type uint32 {
+                            range "1..900";
+                        }
+                        default "54";
+                        description "The penalty value of a Down interface attenuates to 1/2. The value is expressed in seconds.";
+                    }
+                }
+                container ifDynamicInfo {
+                    description "Dynamic interface information.";
+                    leaf ifOperStatus {
+                        type ifmcommIfStatus;
+                        config false;
+                        description "Running status of an interface.";
+                    }
+                    leaf ifPhyStatus {
+                        type ifmcommIfStatus;
+                        config false;
+                        description "Physical status of an interface.";
+                    }
+                    leaf ifLinkStatus {
+                        type ifmcommIfStatus;
+                        config false;
+                        description "Link status of an interface.";
+                    }
+                    leaf ifOpertMTU {
+                        type uint32;
+                        config false;
+                        description "Dynamic MTU of an interface.";
+                    }
+                    leaf ifOperSpeed {
+                        type pub-type:bandWidth;
+                        config false;
+                        description "Bandwidth of an interface. ";
+                    }
+                    leaf ifV4State {
+                        type ifmcommIfStatus;
+                        config false;
+                        description "Protocol status of an interface.";
+                    }
+                    leaf ifV6State {
+                        type ifmcommIfStatus;
+                        config false;
+                        description "IPv6 protocol status of an interface.";
+                    }
+                    leaf ifCtrlFlapDamp {
+                        type boolean;
+                        config false;
+                        description "Status suppression of an interface.";
+                    }
+                }
+                container ifStatistics {
+                    description "Interface statistics.";
+                    leaf receiveByte {
+                        type uint64;
+                        config false;
+                        description "Number of bytes received on an interface.";
+                    }
+                    leaf sendByte {
+                        type uint64;
+                        config false;
+                        description "Number of bytes sent on an interface.";
+                    }
+                    leaf receivePacket {
+                        type uint64;
+                        config false;
+                        description "Number of packets received on an interface.";
+                    }
+                    leaf sendPacket {
+                        type uint64;
+                        config false;
+                        description "Number of packets sent on an interface.";
+                    }
+                    leaf rcvUniPacket {
+                        type uint64;
+                        config false;
+                        description "Number of unicast packets received on an interface.";
+                    }
+                    leaf rcvMutiPacket {
+                        type uint64;
+                        config false;
+                        description "Number of multicast packets received on an interface.";
+                    }
+                    leaf rcvBroadPacket {
+                        type uint64;
+                        config false;
+                        description "Number of broadcast packets received on an interface.";
+                    }
+                    leaf sendUniPacket {
+                        type uint64;
+                        config false;
+                        description "Number of unicast packets sent on an interface.";
+                    }
+                    leaf sendMutiPacket {
+                        type uint64;
+                        config false;
+                        description "Number of multicast packets sent on an interface.";
+                    }
+                    leaf sendBroadPacket {
+                        type uint64;
+                        config false;
+                        description "Number of broadcast packets sent on an interface.";
+                    }
+                    leaf rcvErrorPacket {
+                        type uint64;
+                        config false;
+                        description "Number of error packets received on an interface.";
+                    }
+                    leaf rcvDropPacket {
+                        type uint64;
+                        config false;
+                        description "Number of received packets discarded on an interface.";
+                    }
+                    leaf sendErrorPacket {
+                        type uint64;
+                        config false;
+                        description "Number of error packets sent on an interface.";
+                    }
+                    leaf sendDropPacket {
+                        type uint64;
+                        config false;
+                        description "Number of sent packets discarded on an interface.";
+                    }
+                }
+                container ifClearedStat {
+                    description "Interface statistics that can be cleared.";
+                    leaf ifOperStatItvl {
+                        type uint32 {
+                            range "10..600";
+                        }
+                        config false;
+                        default "300";
+                        description "Current interval at which interface flow statistics are collected.";
+                    }
+                    leaf inByteRate {
+                        type uint64;
+                        config false;
+                        description "Rate at which bytes are received within the interval.";
+                    }
+                    leaf inPacketRate {
+                        type uint64;
+                        config false;
+                        description "Rate at which packets are received within the interval.";
+                    }
+                    leaf inUseRate {
+                        type string {
+                            length "1..50";
+                        }
+                        config false;
+                        description "Input bandwidth usage within the interval.";
+                    }
+                    leaf outByteRate {
+                        type uint64;
+                        config false;
+                        description "Rate at which bytes are sent within the interval.";
+                    }
+                    leaf outPacketRate {
+                        type uint64;
+                        config false;
+                        description "Rate at which packets are sent within the interval.";
+                    }
+                    leaf outUseRate {
+                        type string {
+                            length "1..50";
+                        }
+                        config false;
+                        description "Output bandwidth usage within the interval.";
+                    }
+                    leaf receiveByte {
+                        type uint64;
+                        config false;
+                        description "Number of received bytes, which can be cleared.";
+                    }
+                    leaf sendByte {
+                        type uint64;
+                        config false;
+                        description "Number of sent bytes, which can be cleared.";
+                    }
+                    leaf receivePacket {
+                        type uint64;
+                        config false;
+                        description "Number of received packets, which can be cleared.";
+                    }
+                    leaf sendPacket {
+                        type uint64;
+                        config false;
+                        description "Number of sent packets, which can be cleared.";
+                    }
+                    leaf rcvUniPacket {
+                        type uint64;
+                        config false;
+                        description "Number of received unicast packets, which can be cleared.";
+                    }
+                    leaf rcvMutiPacket {
+                        type uint64;
+                        config false;
+                        description "Number of received multicast packets, which can be cleared.";
+                    }
+                    leaf rcvBroadPacket {
+                        type uint64;
+                        config false;
+                        description "Number of received broadcast packets, which can be cleared.";
+                    }
+                    leaf sendUniPacket {
+                        type uint64;
+                        config false;
+                        description "Number of sent unicast packets, which can be cleared.";
+                    }
+                    leaf sendMutiPacket {
+                        type uint64;
+                        config false;
+                        description "Number of sent multicast packets, which can be cleared.";
+                    }
+                    leaf sendBroadPacket {
+                        type uint64;
+                        config false;
+                        description "Number of sent broadcast packets, which can be cleared.";
+                    }
+                    leaf rcvErrorPacket {
+                        type uint64;
+                        config false;
+                        description "Number of received error packets, which can be cleared.";
+                    }
+                    leaf rcvDropPacket {
+                        type uint64;
+                        config false;
+                        description "Number of received discarded packets, which can be cleared.";
+                    }
+                    leaf sendErrorPacket {
+                        type uint64;
+                        config false;
+                        description "Number of sent error packets, which can be cleared.";
+                    }
+                    leaf sendDropPacket {
+                        type uint64;
+                        config false;
+                        description "Number of sent discarded packets, which can be cleared.";
+                    }
+                    container ifMacMtuDiscardStat {
+                        description "MAC&MTU error statistics.";
+                        leaf statisticsMtuIpv4 {
+                            type uint64;
+                            config false;
+                            mandatory true;
+                            description "IPv4 MTU error statistics.";
+                        }
+                        leaf statisticsMtuIpv6 {
+                            type uint64;
+                            config false;
+                            mandatory true;
+                            description "IPv6 MTU error statistics.";
+                        }
+                        leaf statisticsMacIpv4 {
+                            type uint64;
+                            config false;
+                            mandatory true;
+                            description "IPv4 MAC error statistics.";
+                        }
+                        leaf statisticsMacIpv6 {
+                            type uint64;
+                            config false;
+                            mandatory true;
+                            description "IPv6 MAC error statistics.";
+                        }
+                    }
+                }
+                container ppp {
+                    uses ifm:ifm_pppbase_pppConfig_type_oper;
+                }
+                container hdlc {
+                    uses ifm:hdlc_chdlc_oper_hdlcConfig_type;
+                }
+                container fr {
+                    uses ifm:ifm_frConfig_type;
+                }
+                container ifErrorDown {
+                    description "Information about the interface in the error-down state, including the interface name, cause of the error-down event, delay for the transition from Down to Up, and remaining time for the Up state.";
+                    leaf errorDownCause {
+                        type ifmcommErrorDownType;
+                        config false;
+                        description "Cause of the error-down event.";
+                    }
+                    leaf recoveryTime {
+                        type uint32;
+                        config false;
+                        description "Delay for the transition from Down to Up, in seconds.";
+                    }
+                    leaf remainderTime {
+                        type uint32;
+                        config false;
+                        description "The remaining time for the Up event, in seconds.";
+                    }
+                }
+                container ifTrapThreshold {
+                    description "Set the trap threshold.";
+                    leaf inputRisingRate {
+                        type uint32 {
+                            range "1..100";
+                        }
+                        default "100";
+                        description "Input bandwidth usage trap threshold.";
+                    }
+                    leaf inputResumeRate {
+                        type uint32 {
+                            range "1..100";
+                        }
+                        default "100";
+                        description "Input bandwidth usage resume threshold";
+                    }
+                    leaf outputRisingRate {
+                        type uint32 {
+                            range "1..100";
+                        }
+                        default "100";
+                        description "Output bandwidth usage trap threshold.";
+                    }
+                    leaf outputResumeRate {
+                        type uint32 {
+                            range "1..100";
+                        }
+                        default "100";
+                        description "Output bandwidth usage resume threshold.";
+                    }
+                }
+                container ifIpStatiCfg {
+                    description "Forward statistic.";
+                    leaf ifIpStatiEnable {
+                        type boolean;
+                        default "false";
+                        description "Enable forward statistics.";
+                    }
+                    leaf ifIpStatiMode {
+                        type ifIpStatiModeType;
+                        description "Forward statistics mode.";
+                    }
+                }
+                container veGroup {
+                    description "Configure a Virtual-Ethernet Group.";
+                    leaf veIfType {
+                        type veInterfaceType;
+                        description "Virtual-Ethernet interface type.";
+                    }
+                    leaf veGroupId {
+                        type uint32 {
+                            range "1..8192";
+                        }
+                        description "Virtual-Ethernet group ID.";
+                    }
+                }
+                container forwardMode {
+                    description "Set the Virtual-Ethernet forward mode.";
+                    leaf veForwarMode {
+                        type veForwarModeType;
+                        description "Virtual-Ethernet forward mode type.";
+                    }
+                }
+                container flowAlarm {
+                    uses ifm:alarm_type;
+                }
+                container transAlarmDown {
+                    description "Set the Transmission-Alarm Down. ";
+                    leaf pais {
+                        type transAlarmDownType;
+                        description "Path Alarm Indication Signal";
+                    }
+                    leaf prdi {
+                        type transAlarmDownType;
+                        description "Path Remote Defect Indication";
+                    }
+                    leaf oof {
+                        type transAlarmDownType;
+                        description "Out of Frame";
+                    }
+                }
+            }
+        }
+    }
+    }
+}

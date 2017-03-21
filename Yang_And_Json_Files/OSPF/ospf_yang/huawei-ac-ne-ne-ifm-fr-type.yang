@@ -1,0 +1,49 @@
+/*
+WARNING:
+This yang model is just for fuction ONOS opensource project demo purpose only,
+And is subject to change in future, Huawei does not commit provide compatibilty
+in commercial product.
+*/
+submodule huawei-ac-ne-ne-ifm-fr-type {
+    belongs-to "huawei-ac-ne-ne-ifm" {
+        prefix "ifm";
+    }
+    
+    organization "Huawei Technologies Co.,Ltd.";
+    contact "Huawei Industrial Base Bantian, Longgang Shenzhen 518129                    
+              People's Republic of China                    
+              Website: http://www.huawei.com Email: support@huawei.com";
+    revision "2013-01-01";
+    typedef cfgLmiType {
+        type enumeration {
+            enum "ansi" {
+                value 0;
+                description "LMI ANSI.";
+            }
+            enum "q933a" {
+                value 1;
+                description "LMI q933a.";
+            }
+            enum "nonstandard" {
+                value 2;
+                description "LMI nonstandard";
+            }
+        }
+    }
+    typedef cfgRole {
+        type enumeration {
+            enum "dte" {
+                value 0;
+                description "FR DTE.";
+            }
+            enum "dce" {
+                value 1;
+                description "FR DCE.";
+            }
+            enum "nni" {
+                value 2;
+                description "FR NNI.";
+            }
+        }
+    }
+}
