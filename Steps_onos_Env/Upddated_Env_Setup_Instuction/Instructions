@@ -1,0 +1,7 @@
+# PREREQUISITE
+# onos and onos-yang-tools should be in /home/root1
+# keep yangdemo app in /home/root1
+# put setup.sh in /home/root1
+# build onos and onos-yang-tools
+# run setup.sh 
+# ok clean and activate the required apps.
