@@ -24,7 +24,7 @@ URI : http://127.0.0.1:8181/onos/restconf/data/ne-l3vpn-api:devices
 											"vpnTargets": {
 												"vpnTarget": [{
 													"vrfRTValue": "1:1",
-													"vrfRTType": "export-extcommunity"
+													"vrfRTType": "export_extcommunity"
 													}]
 											}
 										}]
